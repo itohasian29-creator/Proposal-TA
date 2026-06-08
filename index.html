@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presentasi Proposal TA - Cadangan Karbon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        /* CSS Variabel untuk Tema Warna */
+        :root {
+            --primary-green: #166534; /* Hijau Tua */
+            --secondary-green: #22c55e; /* Hijau Terang */
+            --accent-yellow: #eab308; /* Kuning Emas */
+            --bg-light: #f8fafc; /* Latar Belakang Slide */
+            --text-dark: #334155;
+            --text-light: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* Latar belakang luar mode presentasi */
+            background-color: #0f172a; 
+            font-family: "DM Sans", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Mencegah scrolling */
+            color: var(--text-dark);
+        }
+
+        /* Area Presentasi yang akan di-scale oleh JavaScript */
+        #presentation-area {
+            position: relative;
+            width: 1100px;
+            height: 650px;
+            transform-origin: center center;
+        }
+
+        /* Container Utama Slide */
+        .slide-container {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-light);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            display: none; /* Sembunyikan semua slide secara default */
+            flex-direction: column;
+            padding: 50px 60px;
+            position: absolute;
+            top: 0; left: 0;
+            overflow: hidden;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* Slide yang aktif ditampilkan */
+        .slide-container.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Ornamen Latar Belakang */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(22, 101, 52, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -80px;
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* Tipografi */
+        h1, h2, h3 {
+            font-family: "Merriweather", serif;
+        }
+
+        h2.slide-title {
+            color: var(--primary-green);
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid var(--accent-yellow);
+            display: inline-block;
+            align-self: flex-start;
+        }
+
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Slide Cover (Khusus) */
+        .title-slide {
+            background: linear-gradient(135deg, #14532d 0%, var(--primary-green) 50%, var(--secondary-green) 100%);
+            color: var(--text-light);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .title-slide::before, .title-slide::after { display: none; }
+
+        .title-slide h1 {
+            font-size: 48px;
+            line-height: 1.3;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .author-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 30px 50px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+            margin-bottom: 40px;
+        }
+
+        /* Layout & Grid */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Komponen Kotak Informasi */
+        .info-box {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 6px solid var(--primary-green);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            height: 100%;
+        }
+
+        .info-box.accent { border-left-color: var(--accent-yellow); }
+
+        .info-box h3 {
+            color: var(--primary-green);
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Kotak Matematika/Rumus */
+        .math-box {
+            background: #f0fdf4;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px dashed var(--secondary-green);
+            text-align: center;
+            font-family: "Merriweather", serif;
+            font-size: 20px;
+            color: #14532d;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        /* List Kustom */
+        ul.custom-list {
+            list-style: none;
+        }
+        ul.custom-list li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+        }
+        ul.custom-list li i {
+            position: absolute;
+            left: 0;
+            top: 5px;
+            color: var(--accent-yellow);
+            font-size: 18px;
+        }
+
+        /* Gambar */
+        .image-wrapper {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .image-wrapper img {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .caption {
+            margin-top: 15px;
+            font-size: 15px;
+            color: #64748b;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* UI Kontrol Presentasi */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background-color: var(--accent-yellow);
+            color: var(--primary-green);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s, background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            background-color: #facc15;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            color: #94a3b8;
+            font-size: 18px;
+            font-weight: 700;
+            z-index: 1000;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Indikator Slide -->
+    <div class="slide-counter" id="counter">1 / 7</div>
+
+    <!-- Tombol Navigasi -->
+    <div class="nav-controls">
+        <button class="nav-btn" onclick="prevSlide()" title="Slide Sebelumnya (Panah Kiri)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="nav-btn" onclick="nextSlide()" title="Slide Berikutnya (Panah Kanan/Spasi)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Area Presentasi -->
+    <div id="presentation-area">
+        
+        <!-- SLIDE 1: JUDUL -->
+        <div class="slide-container title-slide active">
+            <div class="content" style="justify-content: center; align-items: center;">
+                <p style="color: #fde047; font-weight: 700; font-size: 20px; letter-spacing: 3px; margin-bottom: 20px;">PROPOSAL TUGAS AKHIR</p>
+                <h1>Estimasi dan Komparasi Cadangan Karbon<br>Monokultur dan Polikultur Sawit-Karet<br>di Lahan Petani Swadaya</h1>
+                
+                <div class="author-box">
+                    <p style="font-size: 18px; margin-bottom: 5px; color: #e2e8f0;">Oleh:</p>
+                    <h2 style="font-size: 28px; font-family: 'DM Sans', sans-serif; margin-bottom: 5px;">Muhammad Ibnu Mukhlisin Anggraito</h2>
+                    <p style="font-size: 20px; font-weight: bold; color: #fde047;">NIM: 23.05.117</p>
+                </div>
+                
+                <div>
+                    <p style="font-size: 18px; margin-bottom: 5px;">Program Studi Pengelolaan Perkebunan</p>
+                    <p style="font-size: 20px; font-weight: 700;">POLITEKNIK LPP YOGYAKARTA | 2026</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: LATAR BELAKANG -->
+        <div class="slide-container">
+            <div class="content">
+                <h2 class="slide-title">Latar Belakang</h2>
+                <div class="two-column">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="info-box">
+                            <h3><i class="fa-solid fa-earth-americas"></i> Isu Perubahan Iklim & FOLU</h3>
+                            <p>Sektor <em>Forestry and Other Land Use</em> (FOLU) memiliki peran esensial sebagai sumber emisi sekaligus penyerap karbon untuk mencapai target Net Sink 2030.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3><i class="fa-solid fa-leaf"></i> Paradoks Kelapa Sawit</h3>
+                            <p>Ekspansi sawit kerap dikaitkan dengan deforestasi, namun perkebunan ini secara biologis mampu menyerap karbon melalui akumulasi biomassa di atas permukaan tanah.</p>
+                        </div>
+                    </div>
+                    <div class="info-box accent">
+                        <h3 style="color: var(--accent-yellow);"><i class="fa-solid fa-users"></i> Urgensi Lahan Swadaya</h3>
+                        <ul class="custom-list">
+                            <li><i class="fa-solid fa-triangle-exclamation"></i> <strong>Kesenjangan Data:</strong> Sebagian besar riset karbon dilakukan di perkebunan korporasi berskala besar, sementara data kebun rakyat sangat minim.</li>
+                            <li><i class="fa-solid fa-layer-group"></i> <strong>Heterogenitas Lahan:</strong> Petani swadaya sering menerapkan sistem polikultur (agroforestri) seperti sawit-karet yang diduga menyimpan karbon lebih tinggi.</li>
+                            <li><i class="fa-solid fa-microscope"></i> <strong>Kebutuhan Metode:</strong> Diperlukan metode estimasi non-destruktif yang tidak merusak tanaman produktif milik petani.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: TUJUAN PENELITIAN -->
+        <div class="slide-container">
+            <div class="content">
+                <h2 class="slide-title">Tujuan Penelitian</h2>
+                <p style="text-align: center; margin-bottom: 30px; font-size: 20px;">Penelitian ini bertujuan untuk mengukur dan membandingkan kapasitas sekuestrasi karbon secara spesifik melalui empat tahapan analisis:</p>
+                
+                <div class="grid-4">
+                    <div class="info-box">
+                        <h3><span class="fa-layers fa-fw"><i class="fa-solid fa-circle" style="color: var(--primary-green);"></i><i class="fa-inverse fa-solid fa-1" style="transform: shrink-6;"></i></span> Estimasi Monokultur</h3>
+                        <p>Menghitung estimasi biomassa dan cadangan karbon atas permukaan (AGB) pada kebun sawit sistem monokultur petani swadaya.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3><span class="fa-layers fa-fw"><i class="fa-solid fa-circle" style="color: var(--primary-green);"></i><i class="fa-inverse fa-solid fa-2" style="transform: shrink-6;"></i></span> Estimasi Polikultur</h3>
+                        <p>Menghitung estimasi biomassa dan cadangan karbon (AGB) pada sistem polikultur (sawit-karet) milik petani swadaya.</p>
+                    </div>
+                    <div class="info-box accent">
+                        <h3 style="color: #ca8a04;"><span class="fa-layers fa-fw"><i class="fa-solid fa-circle" style="color: var(--accent-yellow);"></i><i class="fa-inverse fa-solid fa-3" style="transform: shrink-6;"></i></span> Analisis Komparasi</h3>
+                        <p>Menganalisis perbedaan signifikan cadangan karbon antara sistem monokultur dan polikultur menggunakan analisis statistik (Uji-T).</p>
+                    </div>
+                    <div class="info-box accent">
+                        <h3 style="color: #ca8a04;"><span class="fa-layers fa-fw"><i class="fa-solid fa-circle" style="color: var(--accent-yellow);"></i><i class="fa-inverse fa-solid fa-4" style="transform: shrink-6;"></i></span> Pengaruh Parameter</h3>
+                        <p>Menganalisis korelasi dan pengaruh parameter Diameter (DBH) serta Tinggi Tanaman terhadap total cadangan karbon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: TINJAUAN PUSTAKA -->
+        <div class="slide-container">
+            <div class="content">
+                <h2 class="slide-title">Tinjauan Pustaka: Monokultur vs Polikultur</h2>
+                <div class="two-column">
+                    <div class="info-box">
+                        <h3 style="justify-content: center;"><i class="fa-solid fa-seedling"></i> Monokultur Sawit</h3>
+                        <hr style="border: 1px solid #e2e8f0; margin: 15px 0;">
+                        <ul class="custom-list">
+                            <li><i class="fa-solid fa-angle-right"></i> Sawit (<em>Elaeis guineensis</em>) merupakan monokotil dengan densitas batang relatif lebih rendah dibanding kayu keras.</li>
+                            <li><i class="fa-solid fa-angle-right"></i> Memiliki struktur tajuk tunggal (homogen) yang membatasi stratifikasi penyerapan cahaya matahari.</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h3 style="justify-content: center;"><i class="fa-solid fa-tree"></i> Polikultur (Sawit - Karet)</h3>
+                        <hr style="border: 1px solid #e2e8f0; margin: 15px 0;">
+                        <ul class="custom-list">
+                            <li><i class="fa-solid fa-angle-right"></i> Karet (<em>Hevea brasiliensis</em>) adalah tanaman dikotil dengan ketumpatan kayu padat (sekitar 0,53 g/cm³), efisien menyimpan karbon.</li>
+                            <li><i class="fa-solid fa-angle-right"></i> Sistem tajuk bertingkat (multi-strata) meningkatkan tangkapan cahaya dan akumulasi karbon dalam ekosistem.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: METODE ESTIMASI -->
+        <div class="slide-container">
+            <div class="content">
+                <h2 class="slide-title">Metode Estimasi Non-Destruktif</h2>
+                <p style="text-align: center; margin-bottom: 25px;">Menggunakan <strong>Persamaan Alometrik</strong> untuk mengestimasi biomassa tanpa melakukan pemanenan yang merusak (tebang).</p>
+                
+                <div class="two-column" style="gap: 20px;">
+                    <div class="info-box" style="margin-bottom: 0;">
+                        <h3 style="justify-content: center;">Tanaman Kelapa Sawit</h3>
+                        <p style="text-align: center; font-size: 16px;">Model berdasarkan Diameter (D):</p>
+                        <div class="math-box">W = 0.003 &times; D<sup>2.761</sup></div>
+                        <p style="text-align: center; font-size: 16px; margin-top: 15px;">Model berdasarkan Tinggi (H):</p>
+                        <div class="math-box">AGB = 0.0976 &times; H + 0.0706</div>
+                    </div>
+                    
+                    <div class="info-box" style="margin-bottom: 0;">
+                        <h3 style="justify-content: center;">Tanaman Karet (Dikotil)</h3>
+                        <p style="text-align: center; font-size: 16px;">Model Chave et al. (2014) berbasis Ketumpatan Kayu (&rho;) dan DBH (D):</p>
+                        <div class="math-box" style="padding: 25px 15px; font-size: 18px; margin-top: 15px;">
+                            AGB = &rho; &times; exp[-1.499 + 2.148 &times; ln(D) + 0.207 &times; (ln(D))<sup>2</sup> - 0.0281 &times; (ln(D))<sup>3</sup>]
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #14532d; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px;">
+                    <p style="color: #ffffff; margin: 0; font-size: 20px;"><strong>Konversi Cadangan Karbon (Carbon Stock)</strong></p>
+                    <p style="color: #fde047; margin: 5px 0 0 0; font-size: 20px;">C = Biomassa &times; 0,47 <span style="font-size: 16px; color: #cbd5e1; font-weight: normal;">(Fraksi karbon diasumsikan 47%)</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: DESAIN PLOT -->
+        <div class="slide-container">
+            <div class="content">
+                <h2 class="slide-title">Desain & Layout Plot Inventarisasi</h2>
+                <div class="two-column" style="grid-template-columns: 1fr 1fr;">
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <ul class="custom-list" style="font-size: 18px;">
+                            <li><i class="fa-solid fa-location-dot"></i> <strong>Lokasi:</strong> Lahan petani swadaya di Bengkulu.</li>
+                            <li><i class="fa-solid fa-vector-square"></i> <strong>Dimensi Plot:</strong> 20 m &times; 100 m (0,2 Hektare).</li>
+                            <li><i class="fa-solid fa-arrows-turn-right"></i> <strong>Arah Transek:</strong> Memotong arah baris tanam untuk mengakomodir variasi vegetasi.</li>
+                            <li><i class="fa-solid fa-chart-pie"></i> <strong>Intensitas Sampling:</strong> Memenuhi standar minimum kelayakan inventarisasi.</li>
+                            <li><i class="fa-solid fa-map-location-dot"></i> <strong>Pemetaan:</strong> Plot diletakkan pada sistem monokultur murni dan sistem agroforestri (karet-sawit).</li>
+                        </ul>
+                    </div>
+                    <div class="image-wrapper">
+                        <!-- Pastikan file ini ada di folder yang sama -->
+                        <img src="image_12b9c9.png" alt="Desain Layout Plot Inventarisasi Pohon" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang+(Cek+Folder)';">
+                        <p class="caption">Gambar 1. Desain Layout Plot Inventarisasi Pohon</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: PENGUKURAN & ANALISIS -->
+        <div class="slide-container">
+            <div class="content">
+                <h2 class="slide-title">Pengukuran Lapangan & Analisis Data</h2>
+                <div class="two-column" style="grid-template-columns: 0.8fr 1.2fr;">
+                    <div class="image-wrapper">
+                        <!-- Pastikan file ini ada di folder yang sama -->
+                        <img src="image_12b9e9.png" alt="Pengukuran Diameter Setinggi Dada" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang+(Cek+Folder)';">
+                        <p class="caption">Gambar 2. Pengukuran Diameter Setinggi Dada (DBH)</p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="info-box" style="padding: 20px;">
+                            <h3 style="margin-bottom: 10px;"><i class="fa-solid fa-ruler"></i> Parameter Ukur Utama</h3>
+                            <p style="font-size: 16px;">Pengambilan data berfokus pada pengukuran <em>Diameter at Breast Height</em> (DBH) menggunakan pita ukur/phi band pada ketinggian 1,3 meter dari permukaan tanah.</p>
+                        </div>
+                        <div class="info-box accent" style="padding: 20px;">
+                            <h3 style="margin-bottom: 10px; color: #ca8a04;"><i class="fa-solid fa-laptop-code"></i> Teknik Analisis Data</h3>
+                            <ul class="custom-list" style="font-size: 16px;">
+                                <li><i class="fa-solid fa-check"></i> Tabulasi data diameter dan tinggi.</li>
+                                <li><i class="fa-solid fa-check"></i> Perhitungan biomassa menggunakan Microsoft Excel.</li>
+                                <li><i class="fa-solid fa-check"></i> <strong>Uji-t (Independent Sample T-Test):</strong> Untuk menguji signifikansi perbedaan cadangan karbon antara lahan monokultur dan lahan polikultur.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT UNTUK FUNGSI SLIDER DAN AUTO-SCALE -->
+    <script>
+        const slides = document.querySelectorAll('.slide-container');
+        const counter = document.getElementById('counter');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Logika looping array (jika sudah di slide terakhir, balik ke awal)
+            currentSlide = (index + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            counter.innerText = `${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() { showSlide(currentSlide + 1); }
+        function prevSlide() { showSlide(currentSlide - 1); }
+
+        // Fungsi agar slide bisa dipindah dengan tombol panah di Keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Fungsi Auto-Scale: Membuat ukuran presentasi menyesuaikan layar (responsif)
+        function scalePresentation() {
+            const area = document.getElementById('presentation-area');
+            // Menghitung rasio zoom berdasarkan lebar dan tinggi layar (diberi sedikit margin)
+            const scaleX = (window.innerWidth - 40) / 1100;
+            const scaleY = (window.innerHeight - 40) / 650;
+            const scale = Math.min(scaleX, scaleY, 1.2); // Batas maksimal zoom
+            
+            area.style.transform = `scale(${scale})`;
+        }
+
+        // Jalankan fungsi saat web dibuka & saat ukuran layar berubah
+        window.addEventListener('resize', scalePresentation);
+        scalePresentation();
+        showSlide(0); // Tampilkan slide pertama
+    </script>
+
+</body>
+</html>
