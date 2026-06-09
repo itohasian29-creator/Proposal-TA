@@ -26,33 +26,31 @@
         }
 
         body {
-            /* Latar belakang luar mode presentasi */
             background-color: #0f172a; 
             font-family: "DM Sans", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden; /* Mencegah scrolling */
+            overflow: hidden;
             color: var(--text-dark);
         }
 
-        /* Area Presentasi yang akan di-scale oleh JavaScript */
         #presentation-area {
             position: relative;
             width: 1100px;
             height: 650px;
             transform-origin: center center;
+            transition: transform 0.2s ease-out;
         }
 
-        /* Container Utama Slide */
         .slide-container {
             width: 100%;
             height: 100%;
             background-color: var(--bg-light);
             border-radius: 16px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            display: none; /* Sembunyikan semua slide secara default */
+            display: none; 
             flex-direction: column;
             padding: 50px 60px;
             position: absolute;
@@ -61,17 +59,13 @@
             animation: fadeIn 0.4s ease-out;
         }
 
-        /* Slide yang aktif ditampilkan */
-        .slide-container.active {
-            display: flex;
-        }
+        .slide-container.active { display: flex; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Ornamen Latar Belakang */
         .slide-container::before {
             content: '';
             position: absolute;
@@ -100,10 +94,7 @@
             height: 100%;
         }
 
-        /* Tipografi */
-        h1, h2, h3 {
-            font-family: "Merriweather", serif;
-        }
+        h1, h2, h3 { font-family: "Merriweather", serif; }
 
         h2.slide-title {
             color: var(--primary-green);
@@ -116,12 +107,8 @@
             align-self: flex-start;
         }
 
-        p, li {
-            font-size: 18px;
-            line-height: 1.6;
-        }
+        p, li { font-size: 18px; line-height: 1.6; }
 
-        /* Slide Cover (Khusus) */
         .title-slide {
             background: linear-gradient(135deg, #14532d 0%, var(--primary-green) 50%, var(--secondary-green) 100%);
             color: var(--text-light);
@@ -133,7 +120,7 @@
         .title-slide::before, .title-slide::after { display: none; }
 
         .title-slide h1 {
-            font-size: 48px;
+            font-size: 44px;
             line-height: 1.3;
             margin-bottom: 30px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -142,13 +129,22 @@
         .author-box {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
-            padding: 30px 50px;
             border-radius: 16px;
             border: 1px solid rgba(255,255,255,0.3);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 40px;
+            text-align: left;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 40px;
         }
 
-        /* Layout & Grid */
+        .author-divider {
+            border-left: 2px solid rgba(255,255,255,0.3);
+            padding-left: 40px;
+        }
+
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -162,7 +158,6 @@
             gap: 20px;
         }
 
-        /* Komponen Kotak Informasi */
         .info-box {
             background: #ffffff;
             padding: 25px;
@@ -183,7 +178,6 @@
             gap: 10px;
         }
 
-        /* Kotak Matematika/Rumus */
         .math-box {
             background: #f0fdf4;
             padding: 15px;
@@ -197,10 +191,7 @@
             font-style: italic;
         }
 
-        /* List Kustom */
-        ul.custom-list {
-            list-style: none;
-        }
+        ul.custom-list { list-style: none; }
         ul.custom-list li {
             position: relative;
             padding-left: 35px;
@@ -214,7 +205,6 @@
             font-size: 18px;
         }
 
-        /* Gambar */
         .image-wrapper {
             background: #ffffff;
             border-radius: 12px;
@@ -242,7 +232,6 @@
             text-align: center;
         }
 
-        /* UI Kontrol Presentasi */
         .nav-controls {
             position: fixed;
             bottom: 30px;
@@ -283,37 +272,78 @@
             z-index: 1000;
             letter-spacing: 2px;
         }
+
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            body { background-color: var(--bg-light); overflow-y: auto; display: block; height: auto; }
+            #presentation-area { width: 100% !important; height: auto !important; transform: none !important; }
+            
+            .slide-container {
+                position: relative; 
+                display: none; 
+                border-radius: 0;
+                padding: 30px 20px 100px 20px; 
+                height: auto; min-height: 100vh;
+                box-shadow: none;
+            }
+            .slide-container.active { display: flex; }
+
+            .content { height: auto; }
+            .two-column, .grid-4 { grid-template-columns: 1fr !important; gap: 15px; }
+
+            h2.slide-title { font-size: 24px; margin-bottom: 20px; border-bottom: 3px solid var(--accent-yellow); }
+            .title-slide h1 { font-size: 28px; margin-bottom: 20px; }
+            p, li { font-size: 14px; line-height: 1.5; }
+            .info-box h3 { font-size: 18px; margin-bottom: 10px; }
+            .math-box { font-size: 15px; padding: 10px; }
+            
+            .author-box { flex-direction: column; gap: 20px; padding: 20px; text-align: center; width: 100%; }
+            .author-divider { border-left: none; border-top: 1px solid rgba(255,255,255,0.3); padding-left: 0; padding-top: 20px; width: 100%; }
+
+            .image-wrapper { padding: 10px; margin-bottom: 15px; }
+            .image-wrapper img { max-height: 250px; }
+
+            .nav-controls { bottom: 20px; right: 20px; gap: 10px; }
+            .nav-btn { width: 45px; height: 45px; font-size: 18px; }
+            .slide-counter { bottom: 35px; left: 20px; font-size: 14px; color: #64748b; }
+            .title-slide ~ .slide-counter { color: white; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Indikator Slide -->
-    <div class="slide-counter" id="counter">1 / 7</div>
+    <div class="slide-counter" id="counter">1 / 8</div>
 
-    <!-- Tombol Navigasi -->
     <div class="nav-controls">
-        <button class="nav-btn" onclick="prevSlide()" title="Slide Sebelumnya (Panah Kiri)"><i class="fa-solid fa-chevron-left"></i></button>
-        <button class="nav-btn" onclick="nextSlide()" title="Slide Berikutnya (Panah Kanan/Spasi)"><i class="fa-solid fa-chevron-right"></i></button>
+        <button class="nav-btn" onclick="prevSlide()" title="Slide Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="nav-btn" onclick="nextSlide()" title="Slide Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
 
-    <!-- Area Presentasi -->
     <div id="presentation-area">
         
         <!-- SLIDE 1: JUDUL -->
         <div class="slide-container title-slide active">
             <div class="content" style="justify-content: center; align-items: center;">
-                <p style="color: #fde047; font-weight: 700; font-size: 20px; letter-spacing: 3px; margin-bottom: 20px;">PROPOSAL TUGAS AKHIR</p>
-                <h1>Estimasi dan Komparasi Cadangan Karbon<br>Monokultur dan Polikultur Sawit-Karet<br>di Lahan Petani Swadaya</h1>
+                <img src="image_a4ceab.png" alt="Logo Politeknik LPP" style="width: 110px; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));" onerror="this.onerror=null; this.src='https://via.placeholder.com/110?text=Logo';">
+                <p style="color: #fde047; font-weight: 700; font-size: 16px; letter-spacing: 3px; margin-bottom: 10px;">PROPOSAL TUGAS AKHIR</p>
+                <h1 style="font-size: 34px; line-height: 1.3; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Estimasi dan Komparasi Cadangan Karbon<br>Monokultur dan Polikultur Sawit-Karet<br>di Lahan Petani Swadaya</h1>
                 
-                <div class="author-box">
-                    <p style="font-size: 18px; margin-bottom: 5px; color: #e2e8f0;">Oleh:</p>
-                    <h2 style="font-size: 28px; font-family: 'DM Sans', sans-serif; margin-bottom: 5px;">Muhammad Ibnu Mukhlisin Anggraito</h2>
-                    <p style="font-size: 20px; font-weight: bold; color: #fde047;">NIM: 23.05.117</p>
+                <div class="author-box" style="width: 100%; max-width: 850px; padding: 20px 30px;">
+                    <div style="flex: 1; text-align: center;">
+                        <p style="font-size: 14px; margin-bottom: 5px; color: #e2e8f0;">Disusun Oleh:</p>
+                        <h2 style="font-size: 20px; font-family: 'DM Sans', sans-serif; margin-bottom: 5px;">Muhammad Ibnu Mukhlisin Anggraito</h2>
+                        <p style="font-size: 16px; font-weight: bold; color: #fde047;">NIM: 23.05.117</p>
+                    </div>
+                    <div class="author-divider" style="flex: 1; text-align: center;">
+                        <p style="font-size: 14px; margin-bottom: 5px; color: #e2e8f0;">Dosen Pembimbing:</p>
+                        <h2 style="font-size: 20px; font-family: 'DM Sans', sans-serif; margin-bottom: 5px;">Azhari Rizal, S.Tr., M.M.A</h2>
+                        <p style="font-size: 16px; font-weight: bold; color: #fde047;">NIDN: 0505048602</p>
+                    </div>
                 </div>
                 
                 <div>
-                    <p style="font-size: 18px; margin-bottom: 5px;">Program Studi Pengelolaan Perkebunan</p>
-                    <p style="font-size: 20px; font-weight: 700;">POLITEKNIK LPP YOGYAKARTA | 2026</p>
+                    <p style="font-size: 16px; margin-bottom: 5px;">Program Studi Pengelolaan Perkebunan</p>
+                    <p style="font-size: 18px; font-weight: 700;">POLITEKNIK LPP YOGYAKARTA | 2026</p>
                 </div>
             </div>
         </div>
@@ -349,7 +379,7 @@
         <div class="slide-container">
             <div class="content">
                 <h2 class="slide-title">Tujuan Penelitian</h2>
-                <p style="text-align: center; margin-bottom: 30px; font-size: 20px;">Penelitian ini bertujuan untuk mengukur dan membandingkan kapasitas sekuestrasi karbon secara spesifik melalui empat tahapan analisis:</p>
+                <p style="text-align: center; margin-bottom: 30px; font-size: 18px;">Penelitian ini bertujuan untuk mengukur dan membandingkan kapasitas sekuestrasi karbon secara spesifik melalui empat tahapan analisis:</p>
                 
                 <div class="grid-4">
                     <div class="info-box">
@@ -401,29 +431,29 @@
         <div class="slide-container">
             <div class="content">
                 <h2 class="slide-title">Metode Estimasi Non-Destruktif</h2>
-                <p style="text-align: center; margin-bottom: 25px;">Menggunakan <strong>Persamaan Alometrik</strong> untuk mengestimasi biomassa tanpa melakukan pemanenan yang merusak (tebang).</p>
+                <p style="text-align: center; margin-bottom: 20px;">Menggunakan <strong>Persamaan Alometrik</strong> untuk mengestimasi biomassa tanpa pemanenan destruktif (tebang).</p>
                 
                 <div class="two-column" style="gap: 20px;">
                     <div class="info-box" style="margin-bottom: 0;">
                         <h3 style="justify-content: center;">Tanaman Kelapa Sawit</h3>
-                        <p style="text-align: center; font-size: 16px;">Model berdasarkan Diameter (D):</p>
+                        <p style="text-align: center;">Model berdasarkan Diameter (D):</p>
                         <div class="math-box">W = 0.003 &times; D<sup>2.761</sup></div>
-                        <p style="text-align: center; font-size: 16px; margin-top: 15px;">Model berdasarkan Tinggi (H):</p>
+                        <p style="text-align: center; margin-top: 15px;">Model berdasarkan Tinggi (H):</p>
                         <div class="math-box">AGB = 0.0976 &times; H + 0.0706</div>
                     </div>
                     
                     <div class="info-box" style="margin-bottom: 0;">
                         <h3 style="justify-content: center;">Tanaman Karet (Dikotil)</h3>
-                        <p style="text-align: center; font-size: 16px;">Model Chave et al. (2014) berbasis Ketumpatan Kayu (&rho;) dan DBH (D):</p>
-                        <div class="math-box" style="padding: 25px 15px; font-size: 18px; margin-top: 15px;">
+                        <p style="text-align: center;">Model Chave et al. berbasis Ketumpatan Kayu (&rho;) dan DBH (D):</p>
+                        <div class="math-box" style="padding: 15px 10px; margin-top: 15px;">
                             AGB = &rho; &times; exp[-1.499 + 2.148 &times; ln(D) + 0.207 &times; (ln(D))<sup>2</sup> - 0.0281 &times; (ln(D))<sup>3</sup>]
                         </div>
                     </div>
                 </div>
 
                 <div style="background: #14532d; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px;">
-                    <p style="color: #ffffff; margin: 0; font-size: 20px;"><strong>Konversi Cadangan Karbon (Carbon Stock)</strong></p>
-                    <p style="color: #fde047; margin: 5px 0 0 0; font-size: 20px;">C = Biomassa &times; 0,47 <span style="font-size: 16px; color: #cbd5e1; font-weight: normal;">(Fraksi karbon diasumsikan 47%)</span></p>
+                    <p style="color: #ffffff; margin: 0; font-size: 18px;"><strong>Konversi Cadangan Karbon (Carbon Stock)</strong></p>
+                    <p style="color: #fde047; margin: 5px 0 0 0; font-size: 18px;">C = Biomassa &times; 0,47 <span style="font-size: 14px; color: #cbd5e1; font-weight: normal;">(Fraksi karbon 47%)</span></p>
                 </div>
             </div>
         </div>
@@ -434,7 +464,7 @@
                 <h2 class="slide-title">Desain & Layout Plot Inventarisasi</h2>
                 <div class="two-column" style="grid-template-columns: 1fr 1fr;">
                     <div style="display: flex; flex-direction: column; justify-content: center;">
-                        <ul class="custom-list" style="font-size: 18px;">
+                        <ul class="custom-list">
                             <li><i class="fa-solid fa-location-dot"></i> <strong>Lokasi:</strong> Lahan petani swadaya di Bengkulu.</li>
                             <li><i class="fa-solid fa-vector-square"></i> <strong>Dimensi Plot:</strong> 20 m &times; 100 m (0,2 Hektare).</li>
                             <li><i class="fa-solid fa-arrows-turn-right"></i> <strong>Arah Transek:</strong> Memotong arah baris tanam untuk mengakomodir variasi vegetasi.</li>
@@ -443,9 +473,8 @@
                         </ul>
                     </div>
                     <div class="image-wrapper">
-                        <!-- Pastikan file ini ada di folder yang sama -->
-                        <img src="image_12b9c9.png" alt="Desain Layout Plot Inventarisasi Pohon" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang+(Cek+Folder)';">
-                        <p class="caption">Gambar 1. Desain Layout Plot Inventarisasi Pohon</p>
+                        <img src="image_12b9c9.png" alt="Desain Layout Plot" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang';">
+                        <p class="caption">Gambar 1. Desain Layout Plot Inventarisasi</p>
                     </div>
                 </div>
             </div>
@@ -454,25 +483,65 @@
         <!-- SLIDE 7: PENGUKURAN & ANALISIS -->
         <div class="slide-container">
             <div class="content">
-                <h2 class="slide-title">Pengukuran Lapangan & Analisis Data</h2>
+                <h2 class="slide-title">Pengukuran & Analisis Data</h2>
                 <div class="two-column" style="grid-template-columns: 0.8fr 1.2fr;">
                     <div class="image-wrapper">
-                        <!-- Pastikan file ini ada di folder yang sama -->
-                        <img src="image_12b9e9.png" alt="Pengukuran Diameter Setinggi Dada" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang+(Cek+Folder)';">
+                        <img src="image_12b9e9.png" alt="Pengukuran DBH" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang';">
                         <p class="caption">Gambar 2. Pengukuran Diameter Setinggi Dada (DBH)</p>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 20px;">
                         <div class="info-box" style="padding: 20px;">
                             <h3 style="margin-bottom: 10px;"><i class="fa-solid fa-ruler"></i> Parameter Ukur Utama</h3>
-                            <p style="font-size: 16px;">Pengambilan data berfokus pada pengukuran <em>Diameter at Breast Height</em> (DBH) menggunakan pita ukur/phi band pada ketinggian 1,3 meter dari permukaan tanah.</p>
+                            <p>Pengambilan data berfokus pada pengukuran <em>Diameter at Breast Height</em> (DBH) menggunakan pita ukur/phi band pada ketinggian 1,3 meter.</p>
                         </div>
                         <div class="info-box accent" style="padding: 20px;">
                             <h3 style="margin-bottom: 10px; color: #ca8a04;"><i class="fa-solid fa-laptop-code"></i> Teknik Analisis Data</h3>
-                            <ul class="custom-list" style="font-size: 16px;">
+                            <ul class="custom-list">
                                 <li><i class="fa-solid fa-check"></i> Tabulasi data diameter dan tinggi.</li>
                                 <li><i class="fa-solid fa-check"></i> Perhitungan biomassa menggunakan Microsoft Excel.</li>
-                                <li><i class="fa-solid fa-check"></i> <strong>Uji-t (Independent Sample T-Test):</strong> Untuk menguji signifikansi perbedaan cadangan karbon antara lahan monokultur dan lahan polikultur.</li>
+                                <li><i class="fa-solid fa-check"></i> <strong>Uji-t (Independent Sample T-Test):</strong> Menguji signifikansi perbedaan cadangan karbon.</li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: PENUTUP & TANYA JAWAB (INTERAKTIF GOOGLE SHEETS) -->
+        <div class="slide-container">
+            <div class="content" style="display: flex; flex-direction: column; height: 100%;">
+                <div style="flex-shrink: 0; display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; border-bottom: 4px solid var(--accent-yellow); padding-bottom: 10px;">
+                    <h2 class="slide-title" style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">Sesi Tanya Jawab</h2>
+                    <h2 style="color: var(--primary-green); font-size: 32px; margin: 0;"><i class="fa-solid fa-hands-praying" style="color: var(--accent-yellow);"></i> Terima Kasih</h2>
+                </div>
+                
+                <div class="two-column" style="flex-grow: 1; min-height: 0; margin-bottom: 0; gap: 30px;">
+                    <!-- Form Input Catatan -->
+                    <div class="info-box" style="display: flex; flex-direction: column; gap: 10px; padding: 20px; margin: 0; height: 100%;">
+                        <h3 style="margin-bottom: 0; font-size: 18px;"><i class="fa-solid fa-pen-to-square"></i> Sampaikan Komentar/Pertanyaan</h3>
+                        <input type="text" id="commentName" placeholder="Username (Boleh Anonim)" style="padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 14px; outline: none;">
+                        <textarea id="commentText" placeholder="Ketik pertanyaan atau saran Anda di sini..." style="padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 14px; outline: none; resize: none; flex-grow: 1;"></textarea>
+                        
+                        <!-- Status Pengiriman -->
+                        <div id="submitStatus" style="font-size: 13px; font-style: italic; color: var(--primary-green); display: none;">Mengirim komentar...</div>
+                        
+                        <button onclick="addComment()" style="background: var(--primary-green); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: bold; transition: background 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Kirim Komentar</button>
+                    </div>
+                    
+                    <!-- Daftar Catatan Tersimpan -->
+                    <div class="info-box accent" style="display: flex; flex-direction: column; padding: 20px; margin: 0; height: 100%;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h3 style="margin-bottom: 0; color: #ca8a04; font-size: 18px;"><i class="fa-solid fa-comments"></i> Forum Diskusi</h3>
+                            <button onclick="fetchComments()" style="background: transparent; color: var(--primary-green); border: none; cursor: pointer; font-size: 14px; text-decoration: underline;"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+                        </div>
+                        
+                        <!-- Indikator Loading -->
+                        <div id="loadingComments" style="text-align: center; color: var(--primary-green); padding: 20px; display: none;">
+                            <i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><span style="font-size: 14px; margin-top: 10px; display: inline-block;">Memuat komentar dari server...</span>
+                        </div>
+
+                        <div id="commentList" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 5px; border-radius: 8px; background: #f8fafc; padding: 15px; border: 1px solid #e2e8f0;">
+                            <!-- Catatan akan masuk di sini via JS -->
                         </div>
                     </div>
                 </div>
@@ -487,21 +556,204 @@
         const counter = document.getElementById('counter');
         let currentSlide = 0;
 
+        function updateCounterColor() {
+            if (currentSlide === 0) {
+                counter.style.color = '#f8fafc';
+            } else {
+                counter.style.color = window.innerWidth <= 768 ? '#64748b' : '#94a3b8';
+            }
+        }
+
         function showSlide(index) {
             slides.forEach(slide => slide.classList.remove('active'));
-            
-            // Logika looping array (jika sudah di slide terakhir, balik ke awal)
             currentSlide = (index + slides.length) % slides.length;
-            
             slides[currentSlide].classList.add('active');
             counter.innerText = `${currentSlide + 1} / ${slides.length}`;
+            updateCounterColor();
+            if (window.innerWidth <= 768) {
+                window.scrollTo(0, 0); // Scroll otomatis ke atas jika di HP
+            }
         }
 
         function nextSlide() { showSlide(currentSlide + 1); }
         function prevSlide() { showSlide(currentSlide - 1); }
 
+       
+
+        function scalePresentation() {
+            const area = document.getElementById('presentation-area');
+            if (window.innerWidth <= 768) {
+                area.style.transform = 'none';
+                area.style.width = '100%';
+                area.style.height = '100%';
+            } else {
+                area.style.width = '1100px';
+                area.style.height = '650px';
+                const scaleX = (window.innerWidth - 40) / 1100;
+                const scaleY = (window.innerHeight - 40) / 650;
+                const scale = Math.min(scaleX, scaleY, 1.2); 
+                area.style.transform = `scale(${scale})`;
+            }
+            updateCounterColor();
+        }
+
+        window.addEventListener('resize', scalePresentation);
+        scalePresentation();
+        showSlide(0);
+
+        
+
+        // =======================================================
+        // FITUR KOMENTAR & REPLY (TERINTEGRASI GOOGLE SHEETS)
+        // =======================================================
+        
+        // PASTIKAN URL INI SUDAH DIGANTI DENGAN URL WEB APP MILIK ANDA
+        const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycby9owGGN6Dh6zf_nrb_CTQ9fp5wrkohgIRitjEfsI9m4Y8c7ya18h73wZ_gpGPpsrb9Jw/exec"; 
+
+        const commentListEl = document.getElementById('commentList');
+        const loadingEl = document.getElementById('loadingComments');
+        const statusEl = document.getElementById('submitStatus');
+
+        async function fetchComments() {
+            // Perbaikan: Hapus pengecekan URL yang spesifik karena itu yang memicu error
+            if (!GOOGLE_SHEETS_URL.includes("script.google.com")) {
+                commentListEl.innerHTML = '<p style="text-align:center; color:#ef4444; font-style:italic; margin-top: 20px;">URL Google Apps Script tidak valid.</p>';
+                return;
+            }
+
+            commentListEl.style.display = 'none';
+            loadingEl.style.display = 'block';
+
+            try {
+                const response = await fetch(GOOGLE_SHEETS_URL);
+                const comments = await response.json();
+                renderComments(comments);
+            } catch (error) {
+                console.error("Error fetching comments:", error);
+                commentListEl.innerHTML = '<p style="text-align:center; color:#ef4444; margin-top: 20px;">Gagal memuat komentar. Periksa koneksi internet Anda.</p>';
+            } finally {
+                loadingEl.style.display = 'none';
+                commentListEl.style.display = 'flex';
+            }
+        }
+
+        function renderComments(comments) {
+            commentListEl.innerHTML = '';
+            
+            if (!comments || comments.length === 0) {
+                commentListEl.innerHTML = '<p style="text-align:center; color:#94a3b8; font-style:italic; margin-top: 30px;">Belum ada komentar.</p>';
+                return;
+            }
+
+            comments.forEach(c => {
+                const div = document.createElement('div');
+                div.style.cssText = 'background: #ffffff; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; border-left: 4px solid var(--accent-yellow); box-shadow: 0 2px 4px rgba(0,0,0,0.05);';
+                
+                let repliesHtml = '';
+                if (c.replies && c.replies.length > 0) {
+                    repliesHtml = '<div style="margin-top: 10px; padding-left: 10px; border-left: 2px solid #cbd5e1;">';
+                    c.replies.forEach(reply => {
+                        const parts = reply.split(": ");
+                        const rName = parts[0];
+                        const rText = parts.slice(1).join(": ");
+                        repliesHtml += `<div style="background: #f1f5f9; padding: 8px; border-radius: 6px; margin-bottom: 5px; font-size: 13px;">
+                                            <strong style="color: var(--primary-green);">${rName}</strong>: ${rText}
+                                        </div>`;
+                    });
+                    repliesHtml += '</div>';
+                }
+
+                div.innerHTML = `
+                    <strong style="color: var(--primary-green); font-size: 15px;"><i class="fa-solid fa-user" style="margin-right: 5px; color: #94a3b8;"></i>${c.name}</strong>
+                    <p style="font-size: 14px; margin-top: 5px; margin-bottom: 10px; color: var(--text-dark); line-height: 1.4;">${c.text.replace(/\n/g, '<br>')}</p>
+                    ${repliesHtml}
+                    <div style="margin-top: 8px; display: flex; gap: 8px;" id="reply-container-${c.id}">
+                        <button onclick="showReplyForm('${c.id}')" style="background: none; border: none; color: var(--accent-yellow); font-size: 12px; font-weight: bold; cursor: pointer; padding: 0;"><i class="fa-solid fa-reply"></i> Balas</button>
+                    </div>
+                `;
+                commentListEl.appendChild(div);
+            });
+            
+            commentListEl.scrollTop = commentListEl.scrollHeight;
+        }
+
+        async function addComment() {
+            const nameInput = document.getElementById('commentName');
+            const textInput = document.getElementById('commentText');
+            
+            const name = nameInput.value.trim() || 'Anonim';
+            const text = textInput.value.trim();
+            
+            if (!text) { alert('Mohon isi kolom pertanyaan/saran terlebih dahulu!'); return; }
+            
+            statusEl.style.display = 'block';
+
+            try {
+                await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "add_comment", name: name, text: text })
+                });
+                
+                nameInput.value = '';
+                textInput.value = '';
+                setTimeout(fetchComments, 1000); 
+            } catch (error) {
+                console.error("Error posting:", error);
+                alert("Gagal mengirim komentar.");
+            } finally {
+                statusEl.style.display = 'none';
+            }
+        }
+
+        function showReplyForm(commentId) {
+            const container = document.getElementById(`reply-container-${commentId}`);
+            container.innerHTML = `
+                <input type="text" id="replyName-${commentId}" placeholder="Nama Anda" style="width: 30%; padding: 6px; font-size: 12px; border-radius: 4px; border: 1px solid #cbd5e1;">
+                <input type="text" id="replyText-${commentId}" placeholder="Ketik balasan..." style="flex-grow: 1; padding: 6px; font-size: 12px; border-radius: 4px; border: 1px solid #cbd5e1;">
+                <button onclick="sendReply('${commentId}', event)" style="background: var(--primary-green); color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 12px; cursor: pointer;">Kirim</button>
+                <button onclick="fetchComments()" style="background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 12px; cursor: pointer;">Batal</button>
+            `;
+        }
+
+        async function sendReply(commentId, event) {
+            const nameInput = document.getElementById(`replyName-${commentId}`);
+            const textInput = document.getElementById(`replyText-${commentId}`);
+            
+            const name = nameInput.value.trim() || 'Pemateri';
+            const text = textInput.value.trim();
+            
+            if (!text) { alert('Isi balasan terlebih dahulu!'); return; }
+            
+            const btn = event.target;
+            btn.innerText = "Mengirim...";
+            btn.disabled = true;
+
+            try {
+                await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "add_reply", parentId: commentId, name: name, text: text })
+                });
+                
+                setTimeout(fetchComments, 1000);
+            } catch (error) {
+                console.error("Error posting reply:", error);
+                alert("Gagal mengirim balasan.");
+                btn.innerText = "Kirim";
+                btn.disabled = false;
+            }
+        }
         // Fungsi agar slide bisa dipindah dengan tombol panah di Keyboard
         document.addEventListener('keydown', (e) => {
+            // Mengecek apakah user sedang mengetik di input atau textarea
+            const isTyping = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+            
+            // Jika sedang mengetik, hentikan fungsi ini agar tidak pindah slide
+            if (isTyping) return;
+
             if (e.key === 'ArrowRight' || e.key === ' ') {
                 nextSlide();
             } else if (e.key === 'ArrowLeft') {
@@ -509,21 +761,8 @@
             }
         });
 
-        // Fungsi Auto-Scale: Membuat ukuran presentasi menyesuaikan layar (responsif)
-        function scalePresentation() {
-            const area = document.getElementById('presentation-area');
-            // Menghitung rasio zoom berdasarkan lebar dan tinggi layar (diberi sedikit margin)
-            const scaleX = (window.innerWidth - 40) / 1100;
-            const scaleY = (window.innerHeight - 40) / 650;
-            const scale = Math.min(scaleX, scaleY, 1.2); // Batas maksimal zoom
-            
-            area.style.transform = `scale(${scale})`;
-        }
-
-        // Jalankan fungsi saat web dibuka & saat ukuran layar berubah
-        window.addEventListener('resize', scalePresentation);
-        scalePresentation();
-        showSlide(0); // Tampilkan slide pertama
+        // Panggil fetchComments jika ingin data ditarik sejak awal
+        fetchComments();
     </script>
 
 </body>
