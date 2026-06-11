@@ -66,35 +66,43 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased font-sans">
 
-    <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 glass-card border-b border-slate-200 transition-transform duration-300 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-leaf text-brand-700 text-2xl"></i>
-                    <span class="font-bold text-xl text-brand-900 tracking-tight">EkoKarbon<span class="text-accent-500">.</span></span>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#latar-belakang" class="text-slate-600 hover:text-brand-700 font-medium transition-colors">Latar Belakang</a>
-                    <a href="#tujuan" class="text-slate-600 hover:text-brand-700 font-medium transition-colors">Tujuan</a>
-                    <a href="#gap" class="text-slate-600 hover:text-brand-700 font-medium transition-colors">Tinjauan Pustaka</a>
-                    <a href="#metode" class="text-slate-600 hover:text-brand-700 font-medium transition-colors">Metode</a>
-                    <a href="#diskusi" class="bg-brand-700 text-white px-5 py-2 rounded-full font-medium hover:bg-brand-900 transition-colors shadow-md">Diskusi</a>
-                </div>
+    <!-- Floating Menu Button -->
+    <button id="menuBtn" title="Buka Menu" class="fixed top-6 right-6 z-[60] w-12 h-12 bg-white text-brand-900 rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.15)] flex items-center justify-center text-xl hover:bg-brand-50 hover:scale-105 transition-all">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Overlay & Side Menu -->
+    <div id="sideMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[65] hidden transition-opacity opacity-0"></div>
+    <div id="sideMenu" class="fixed top-0 right-0 h-full w-72 bg-white z-[70] transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-brand-50/50">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-leaf text-brand-700 text-xl"></i>
+                <span class="font-bold text-lg text-brand-900 tracking-tight">EkoKarbon<span class="text-accent-500">.</span></span>
             </div>
+            <button id="closeMenuBtn" class="w-8 h-8 flex justify-center items-center rounded-full bg-slate-100 text-slate-500 hover:text-red-500 hover:bg-red-50 transition-colors"><i class="fa-solid fa-xmark"></i></button>
         </div>
-    </nav>
+        <div class="flex flex-col p-4 space-y-2 overflow-y-auto">
+            <a href="#latar-belakang" class="menu-link flex items-center gap-3 p-3 rounded-xl hover:bg-brand-50 text-slate-600 hover:text-brand-700 font-medium transition-colors"><i class="fa-solid fa-earth-americas w-5 text-center"></i> Latar Belakang</a>
+            <a href="#tujuan" class="menu-link flex items-center gap-3 p-3 rounded-xl hover:bg-brand-50 text-slate-600 hover:text-brand-700 font-medium transition-colors"><i class="fa-solid fa-bullseye w-5 text-center"></i> Tujuan</a>
+            <a href="#gap" class="menu-link flex items-center gap-3 p-3 rounded-xl hover:bg-brand-50 text-slate-600 hover:text-brand-700 font-medium transition-colors"><i class="fa-solid fa-book-open w-5 text-center"></i> Tinjauan Pustaka</a>
+            <a href="#metode" class="menu-link flex items-center gap-3 p-3 rounded-xl hover:bg-brand-50 text-slate-600 hover:text-brand-700 font-medium transition-colors"><i class="fa-solid fa-flask w-5 text-center"></i> Metode</a>
+            <a href="#diskusi" class="menu-link flex items-center gap-3 p-3 rounded-xl bg-brand-700 text-white hover:bg-brand-900 font-medium transition-colors shadow-md mt-4"><i class="fa-regular fa-comments w-5 text-center"></i> Forum Diskusi</a>
+        </div>
+        <div class="mt-auto p-6 border-t border-slate-100">
+            <p class="text-xs text-slate-400 text-center">Politeknik LPP Yogyakarta &copy; 2026</p>
+        </div>
+    </div>
 
     <!-- Hero Section -->
-    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 pattern-bg text-white overflow-hidden">
+    <header class="relative pt-24 pb-20 lg:pt-32 lg:pb-32 pattern-bg text-white overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-b from-brand-900/80 to-brand-900/95"></div>
         <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <img src="image_a4ceab.png" alt="Logo Politeknik LPP" class="h-28 mx-auto mb-6 drop-shadow-xl" onerror="this.onerror=null; this.src='https://via.placeholder.com/110?text=Logo';">
             <span class="inline-block py-1 px-3 rounded-full bg-accent-500/20 border border-accent-500/50 text-accent-500 font-semibold text-sm tracking-widest uppercase mb-6 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
                 Proposal Tugas Akhir
             </span>
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-8 text-white drop-shadow-lg">
-                Estimasi dan Komparasi Cadangan Karbon <br class="hidden md:block"/> Monokultur dan Polikultur Sawit-Karet
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold leading-tight mb-8 text-white drop-shadow-lg uppercase">
+                ESTIMASI DAN KOMPARASI <br class="hidden md:block"/> CADANGAN KARBON MONOKULTUR DAN POLIKULTUR SAWIT-KARET DI LAHAN PETANI SWADAYA
             </h1>
             <p class="text-lg md:text-xl text-brand-100 mb-12 max-w-3xl mx-auto font-light">
                 Studi kasus komprehensif pada lahan petani swadaya di Bengkulu untuk mendukung pencapaian target <strong>Indonesia FOLU Net Sink 2030</strong>.
@@ -292,6 +300,52 @@
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-900 mb-4">Metodologi & Estimasi Non-Destruktif</h2>
                 <div class="w-24 h-1 bg-accent-500 mx-auto rounded-full mb-6"></div>
                 <p class="text-slate-600 max-w-2xl mx-auto">Pengambilan data difokuskan di hamparan kebun Desa Bukit Mulya, Kec. Air Rami, Kab. Mukomuko, Bengkulu menggunakan Persamaan Alometrik spesifik-spesies.</p>
+            </div>
+
+            <!-- Tabel Pemilihan Metode -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-brand-900 mb-6 text-center">Rasionalisasi Pemilihan Metode Pengukuran</h3>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="bg-brand-50 text-brand-900 font-bold border-b border-brand-200">
+                            <tr>
+                                <th class="px-6 py-4 whitespace-nowrap">Metode Pengukuran Karbon</th>
+                                <th class="px-6 py-4">Kelebihan</th>
+                                <th class="px-6 py-4">Kelemahan</th>
+                                <th class="px-6 py-4 min-w-[300px]">Alasan Kelayakan untuk Lahan Swadaya</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 font-bold text-slate-800">1. Metode Destruktif<br><span class="text-xs font-normal text-slate-500">(Tebang habis, pengeringan oven, penimbangan langsung)</span></td>
+                                <td class="px-6 py-4">Akurasi 100% mutlak, menjadi dasar validasi utama.</td>
+                                <td class="px-6 py-4">Merusak ekosistem, biaya sangat mahal, mematikan tanaman produktif.</td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-block px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded mb-2 border border-red-200">Tidak Layak</span><br>
+                                    Mustahil diterapkan di lahan petani swadaya karena akan menghancurkan aset ekonomi produktif milik masyarakat.
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 font-bold text-slate-800">2. Metode Penginderaan Jauh<br><span class="text-xs font-normal text-slate-500">(Remote Sensing / Citra Satelit / LiDAR)</span></td>
+                                <td class="px-6 py-4">Mampu mencakup luasan wilayah skala regional/provinsi secara cepat.</td>
+                                <td class="px-6 py-4">Akurasi rendah pada plot campuran kecil, terganggu tutupan awan, biaya sewa perangkat LiDAR sangat tinggi.</td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-block px-2 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded mb-2 border border-amber-200">Kurang Layak</span><br>
+                                    Tidak presisi untuk membaca variasi vegetasi <em>underplanting</em> berskala kecil (1 Ha) yang tajuknya saling tumpang tindih.
+                                </td>
+                            </tr>
+                            <tr class="bg-brand-50/50 hover:bg-brand-100/50 transition-colors">
+                                <td class="px-6 py-4 font-bold text-brand-900">3. Metode Non-Destruktif Alometrik<br><span class="text-xs font-normal text-brand-700">(Pengukuran DBH Lapangan + Formula Khusus)</span></td>
+                                <td class="px-6 py-4 text-brand-900 font-medium">Akurat pada skala tapak, hemat biaya, cepat, dan sama sekali tidak merusak tanaman.</td>
+                                <td class="px-6 py-4 text-brand-900">Sangat bergantung pada kesesuaian pemilihan rumus alometrik dari peneliti terdahulu.</td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-block px-2 py-1 bg-brand-600 text-white text-xs font-bold rounded mb-2 shadow-sm">Sangat Layak</span><br>
+                                    <span class="text-brand-900 font-medium">Menjadi solusi terbaik karena data diameter dapat diambil langsung bersama petani tanpa mengganggu produktivitas harian kebun mereka.</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -506,20 +560,32 @@
 
     <!-- Script Integrasi & Navigasi -->
     <script>
-        // Logika Auto-hide Navbar
-        const navbar = document.getElementById('navbar');
-        let lastScrollY = window.scrollY;
+        // Logika Menu Pop-up Samping
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const sideMenuOverlay = document.getElementById('sideMenuOverlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > lastScrollY && window.scrollY > 80) {
-                // Sembunyikan navbar saat scroll ke bawah
-                navbar.classList.add('-translate-y-full');
+        function toggleMenu() {
+            const isOpen = !sideMenu.classList.contains('translate-x-full');
+            if (isOpen) {
+                sideMenu.classList.add('translate-x-full');
+                sideMenuOverlay.classList.remove('opacity-100');
+                setTimeout(() => sideMenuOverlay.classList.add('hidden'), 300);
             } else {
-                // Munculkan navbar saat scroll ke atas atau berada di paling atas
-                navbar.classList.remove('-translate-y-full');
+                sideMenuOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    sideMenuOverlay.classList.add('opacity-100');
+                    sideMenu.classList.remove('translate-x-full');
+                }, 10);
             }
-            lastScrollY = window.scrollY;
-        });
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        sideMenuOverlay.addEventListener('click', toggleMenu);
+        menuLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
         const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycby9owGGN6Dh6zf_nrb_CTQ9fp5wrkohgIRitjEfsI9m4Y8c7ya18h73wZ_gpGPpsrb9Jw/exec"; 
 
@@ -746,7 +812,7 @@
 
         window.scrollToSection = function(index) {
             if (index >= 0 && index < navSections.length) {
-                const navbarHeight = 64;
+                const navbarHeight = 20; // Offset dikurangi karena navbar fix dihilangkan
                 const target = navSections[index];
                 const y = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
                 window.scrollTo({ top: y, behavior: 'smooth' });
