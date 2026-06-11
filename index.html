@@ -1,628 +1,546 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Presentasi Proposal TA - Cadangan Karbon</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <style>
-        /* CSS Variabel untuk Tema Warna */
-        :root {
-            --primary-green: #166534; /* Hijau Tua */
-            --secondary-green: #22c55e; /* Hijau Terang */
-            --accent-yellow: #eab308; /* Kuning Emas */
-            --bg-light: #f8fafc; /* Latar Belakang Slide */
-            --text-dark: #334155;
-            --text-light: #ffffff;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #0f172a; 
-            font-family: "DM Sans", sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            color: var(--text-dark);
-        }
-
-        #presentation-area {
-            position: relative;
-            width: 1100px;
-            height: 650px;
-            transform-origin: center center;
-            transition: transform 0.2s ease-out;
-        }
-
-        .slide-container {
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-light);
-            border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            display: none; 
-            flex-direction: column;
-            padding: 50px 60px;
-            position: absolute;
-            top: 0; left: 0;
-            overflow: hidden;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .slide-container.active { display: flex; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .slide-container::before {
-            content: '';
-            position: absolute;
-            top: -100px; right: -100px;
-            width: 350px; height: 350px;
-            background: radial-gradient(circle, rgba(22, 101, 52, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
-
-        .slide-container::after {
-            content: '';
-            position: absolute;
-            bottom: -80px; left: -80px;
-            width: 250px; height: 250px;
-            background: radial-gradient(circle, rgba(234, 179, 8, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
-
-        .content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        h1, h2, h3 { font-family: "Merriweather", serif; }
-
-        h2.slide-title {
-            color: var(--primary-green);
-            font-size: 38px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 4px solid var(--accent-yellow);
-            display: inline-block;
-            align-self: flex-start;
-        }
-
-        p, li { font-size: 18px; line-height: 1.6; }
-
-        .title-slide {
-            background: linear-gradient(135deg, #14532d 0%, var(--primary-green) 50%, var(--secondary-green) 100%);
-            color: var(--text-light);
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .title-slide::before, .title-slide::after { display: none; }
-
-        .title-slide h1 {
-            font-size: 44px;
-            line-height: 1.3;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .author-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(8px);
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.3);
-            margin-bottom: 30px;
-            display: flex;
-            gap: 40px;
-            text-align: left;
-            justify-content: center;
-            align-items: center;
-            padding: 25px 40px;
-        }
-
-        .author-divider {
-            border-left: 2px solid rgba(255,255,255,0.3);
-            padding-left: 40px;
-        }
-
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            flex-grow: 1;
-        }
-
-        .grid-4 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .info-box {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 6px solid var(--primary-green);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            height: 100%;
-        }
-
-        .info-box.accent { border-left-color: var(--accent-yellow); }
-
-        .info-box h3 {
-            color: var(--primary-green);
-            font-size: 22px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .math-box {
-            background: #f0fdf4;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px dashed var(--secondary-green);
-            text-align: center;
-            font-family: "Merriweather", serif;
-            font-size: 20px;
-            color: #14532d;
-            margin: 10px 0;
-            font-style: italic;
-        }
-
-        ul.custom-list { list-style: none; }
-        ul.custom-list li {
-            position: relative;
-            padding-left: 35px;
-            margin-bottom: 15px;
-        }
-        ul.custom-list li i {
-            position: absolute;
-            left: 0;
-            top: 5px;
-            color: var(--accent-yellow);
-            font-size: 18px;
-        }
-
-        .image-wrapper {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-
-        .image-wrapper img {
-            max-width: 100%;
-            max-height: 350px;
-            border-radius: 8px;
-            object-fit: contain;
-        }
-
-        .caption {
-            margin-top: 15px;
-            font-size: 15px;
-            color: #64748b;
-            font-style: italic;
-            text-align: center;
-        }
-
-        .nav-controls {
-            position: fixed;
-            bottom: 30px;
-            right: 40px;
-            display: flex;
-            gap: 15px;
-            z-index: 1000;
-        }
-        
-        .nav-btn {
-            background-color: var(--accent-yellow);
-            color: var(--primary-green);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 22px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: transform 0.2s, background-color 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-btn:hover {
-            transform: scale(1.1);
-            background-color: #facc15;
-        }
-
-        .slide-counter {
-            position: fixed;
-            bottom: 40px;
-            left: 40px;
-            color: #94a3b8;
-            font-size: 18px;
-            font-weight: 700;
-            z-index: 1000;
-            letter-spacing: 2px;
-        }
-
-        /* Responsive Mobile */
-        @media (max-width: 768px) {
-            body { background-color: var(--bg-light); overflow-y: auto; display: block; height: auto; }
-            #presentation-area { width: 100% !important; height: auto !important; transform: none !important; }
-            
-            .slide-container {
-                position: relative; 
-                display: none; 
-                border-radius: 0;
-                padding: 30px 20px 100px 20px; 
-                height: auto; min-height: 100vh;
-                box-shadow: none;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal TA - Cadangan Karbon</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            700: '#15803d',
+                            900: '#14532d',
+                        },
+                        accent: {
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        }
+                    }
+                }
             }
-            .slide-container.active { display: flex; }
-
-            .content { height: auto; }
-            .two-column, .grid-4 { grid-template-columns: 1fr !important; gap: 15px; }
-
-            h2.slide-title { font-size: 24px; margin-bottom: 20px; border-bottom: 3px solid var(--accent-yellow); }
-            .title-slide h1 { font-size: 28px; margin-bottom: 20px; }
-            p, li { font-size: 14px; line-height: 1.5; }
-            .info-box h3 { font-size: 18px; margin-bottom: 10px; }
-            .math-box { font-size: 15px; padding: 10px; }
-            
-            .author-box { flex-direction: column; gap: 20px; padding: 20px; text-align: center; width: 100%; }
-            .author-divider { border-left: none; border-top: 1px solid rgba(255,255,255,0.3); padding-left: 0; padding-top: 20px; width: 100%; }
-
-            .image-wrapper { padding: 10px; margin-bottom: 15px; }
-            .image-wrapper img { max-height: 250px; }
-
-            .nav-controls { bottom: 20px; right: 20px; gap: 10px; }
-            .nav-btn { width: 45px; height: 45px; font-size: 18px; }
-            .slide-counter { bottom: 35px; left: 20px; font-size: 14px; color: #64748b; }
-            .title-slide ~ .slide-counter { color: white; }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .pattern-bg {
+            background-color: #14532d;
+            background-image: radial-gradient(#22c55e 0.5px, transparent 0.5px), radial-gradient(#22c55e 0.5px, #14532d 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+        /* Custom scrollbar untuk chat */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
 
-    <div class="slide-counter" id="counter">1 / 8</div>
-
-    <div class="nav-controls">
-        <button class="nav-btn" onclick="prevSlide()" title="Slide Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
-        <button class="nav-btn" onclick="nextSlide()" title="Slide Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
-    </div>
-
-    <div id="presentation-area">
-        
-        <!-- SLIDE 1: JUDUL -->
-        <div class="slide-container title-slide active">
-            <div class="content" style="justify-content: center; align-items: center;">
-                <img src="image_a4ceab.png" alt="Logo Politeknik LPP" style="width: 110px; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));" onerror="this.onerror=null; this.src='https://via.placeholder.com/110?text=Logo';">
-                <p style="color: #fde047; font-weight: 700; font-size: 16px; letter-spacing: 3px; margin-bottom: 10px;">PROPOSAL TUGAS AKHIR</p>
-                <h1 style="font-size: 34px; line-height: 1.3; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Estimasi dan Komparasi Cadangan Karbon<br>Monokultur dan Polikultur Sawit-Karet<br>di Lahan Petani Swadaya</h1>
-                
-                <div class="author-box" style="width: 100%; max-width: 850px; padding: 20px 30px;">
-                    <div style="flex: 1; text-align: center;">
-                        <p style="font-size: 14px; margin-bottom: 5px; color: #e2e8f0;">Disusun Oleh:</p>
-                        <h2 style="font-size: 20px; font-family: 'DM Sans', sans-serif; margin-bottom: 5px;">Muhammad Ibnu Mukhlisin Anggraito</h2>
-                        <p style="font-size: 16px; font-weight: bold; color: #fde047;">NIM: 23.05.117</p>
-                    </div>
-                    <div class="author-divider" style="flex: 1; text-align: center;">
-                        <p style="font-size: 14px; margin-bottom: 5px; color: #e2e8f0;">Dosen Pembimbing:</p>
-                        <h2 style="font-size: 20px; font-family: 'DM Sans', sans-serif; margin-bottom: 5px;">Azhari Rizal, S.Tr., M.M.A</h2>
-                        <p style="font-size: 16px; font-weight: bold; color: #fde047;">NIDN: 0505048602</p>
-                    </div>
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 glass-card border-b border-slate-200 transition-transform duration-300 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-leaf text-brand-700 text-2xl"></i>
+                    <span class="font-bold text-xl text-brand-900 tracking-tight">EkoKarbon<span class="text-accent-500">.</span></span>
                 </div>
-                
-                <div>
-                    <p style="font-size: 16px; margin-bottom: 5px;">Program Studi Pengelolaan Perkebunan</p>
-                    <p style="font-size: 18px; font-weight: 700;">POLITEKNIK LPP YOGYAKARTA | 2026</p>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#latar-belakang" class="text-slate-600 hover:text-brand-700 font-medium transition-colors">Latar Belakang</a>
+                    <a href="#tujuan" class="text-slate-600 hover:text-brand-700 font-medium transition-colors">Tujuan</a>
+                    <a href="#gap" class="text-slate-600 hover:text-brand-700 font-medium transition-colors">Tinjauan Pustaka</a>
+                    <a href="#metode" class="text-slate-600 hover:text-brand-700 font-medium transition-colors">Metode</a>
+                    <a href="#diskusi" class="bg-brand-700 text-white px-5 py-2 rounded-full font-medium hover:bg-brand-900 transition-colors shadow-md">Diskusi</a>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <!-- SLIDE 2: LATAR BELAKANG -->
-        <div class="slide-container">
-            <div class="content">
-                <h2 class="slide-title">Latar Belakang</h2>
-                <div class="two-column">
-                    <div style="display: flex; flex-direction: column; gap: 20px;">
-                        <div class="info-box">
-                            <h3><i class="fa-solid fa-earth-americas"></i> Isu Perubahan Iklim & FOLU</h3>
-                            <p>Sektor <em>Forestry and Other Land Use</em> (FOLU) memiliki peran esensial sebagai sumber emisi sekaligus penyerap karbon untuk mencapai target Net Sink 2030.</p>
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 pattern-bg text-white overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-900/80 to-brand-900/95"></div>
+        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <img src="image_a4ceab.png" alt="Logo Politeknik LPP" class="h-28 mx-auto mb-6 drop-shadow-xl" onerror="this.onerror=null; this.src='https://via.placeholder.com/110?text=Logo';">
+            <span class="inline-block py-1 px-3 rounded-full bg-accent-500/20 border border-accent-500/50 text-accent-500 font-semibold text-sm tracking-widest uppercase mb-6 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
+                Proposal Tugas Akhir
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-8 text-white drop-shadow-lg">
+                Estimasi dan Komparasi Cadangan Karbon <br class="hidden md:block"/> Monokultur dan Polikultur Sawit-Karet
+            </h1>
+            <p class="text-lg md:text-xl text-brand-100 mb-12 max-w-3xl mx-auto font-light">
+                Studi kasus komprehensif pada lahan petani swadaya di Bengkulu untuk mendukung pencapaian target <strong>Indonesia FOLU Net Sink 2030</strong>.
+            </p>
+            
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 md:p-8 rounded-2xl flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 max-w-4xl mx-auto">
+                <div class="text-center md:text-left">
+                    <p class="text-brand-100 text-sm mb-1 uppercase tracking-wide">Disusun Oleh</p>
+                    <p class="text-xl font-bold text-white">Muhammad Ibnu Mukhlisin Anggraito</p>
+                    <p class="text-accent-500 font-mono">NIM: 23.05.117</p>
+                </div>
+                <div class="hidden md:block w-px h-16 bg-white/20"></div>
+                <div class="text-center md:text-left">
+                    <p class="text-brand-100 text-sm mb-1 uppercase tracking-wide">Dosen Pembimbing</p>
+                    <p class="text-xl font-bold text-white">Azhari Rizal, S.Tr., M.M.A</p>
+                    <p class="text-accent-500 font-mono">NIDN: 0505048602</p>
+                </div>
+            </div>
+            <div class="mt-10 text-brand-100/70 text-sm uppercase tracking-widest">
+                Program Studi Pengelolaan Perkebunan • Politeknik LPP Yogyakarta • 2026
+            </div>
+        </div>
+    </header>
+
+    <!-- Latar Belakang Section -->
+    <section id="latar-belakang" class="py-20 bg-slate-50 min-h-fit">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-900 mb-4">Latar Belakang</h2>
+                <div class="w-24 h-1 bg-accent-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-shadow group relative overflow-hidden h-full flex flex-col">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="w-14 h-14 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">FOLU Net Sink 2030</h3>
+                    <p class="text-slate-600 leading-relaxed flex-grow">Sektor <em>Forestry and Other Land Use</em> (FOLU) menjadi andalan mitigasi iklim. Target pemerintah adalah penyerapan emisi absolut lebih tinggi dari pelepasannya pada tahun 2030.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-shadow group relative overflow-hidden h-full flex flex-col">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="w-14 h-14 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Paradoks Kelapa Sawit</h3>
+                    <p class="text-slate-600 leading-relaxed flex-grow">Perkebunan sawit monokultur berkontribusi ekonomi besar, namun dinilai memiliki keragaman vegetasi dan kapasitas simpanan karbon yang lebih rendah dibandingkan ekosistem kompleks.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-shadow group relative overflow-hidden ring-2 ring-accent-500/20 h-full flex flex-col">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-accent-50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="w-14 h-14 bg-accent-100 text-accent-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Solusi Polikultur Petani</h3>
+                    <ul class="text-slate-600 space-y-2 text-sm flex-grow">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent-500 mt-1"></i> Sebagian petani menerapkan polikultur sawit-karet.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent-500 mt-1"></i> Data karbon kebun rakyat masih minim dibanding korporasi.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent-500 mt-1"></i> Perlunya metode non-destruktif untuk estimasi karbon tanpa merusak lahan produktif.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tujuan Penelitian Section -->
+    <section id="tujuan" class="py-20 bg-white min-h-fit">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/3">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-900 mb-6">Tujuan <br/><span class="text-accent-500">Penelitian</span></h2>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-6">Menjawab rumusan masalah dengan mengukur dan membandingkan kapasitas sekuestrasi karbon secara spesifik melalui empat tahapan analisis utama.</p>
+                    <div class="p-6 bg-brand-50 rounded-xl border-l-4 border-brand-500 text-brand-900 font-medium italic shadow-sm">
+                        "Mencari solusi keseimbangan ekologis di tengah produktivitas ekonomi lahan swadaya."
+                    </div>
+                </div>
+                <div class="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
+                    <div class="p-6 border border-slate-200 rounded-2xl hover:border-brand-500 transition-colors bg-slate-50/50 flex flex-col justify-center">
+                        <div class="text-brand-500 font-black text-4xl mb-2 opacity-30">01</div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">Estimasi Monokultur</h4>
+                        <p class="text-slate-600 text-sm">Mengestimasi biomassa dan cadangan karbon (AGB) pada kebun sawit sistem monokultur petani swadaya.</p>
+                    </div>
+                    <div class="p-6 border border-slate-200 rounded-2xl hover:border-brand-500 transition-colors bg-slate-50/50 flex flex-col justify-center">
+                        <div class="text-brand-500 font-black text-4xl mb-2 opacity-30">02</div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">Estimasi Polikultur</h4>
+                        <p class="text-slate-600 text-sm">Mengestimasi biomassa dan cadangan karbon (AGB) pada sistem polikultur sawit-karet petani swadaya.</p>
+                    </div>
+                    <div class="p-6 border border-slate-200 rounded-2xl hover:border-accent-500 transition-colors bg-slate-50/50 flex flex-col justify-center">
+                        <div class="text-accent-500 font-black text-4xl mb-2 opacity-30">03</div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">Analisis Komparasi</h4>
+                        <p class="text-slate-600 text-sm">Menganalisis perbedaan cadangan karbon yang signifikan antara sistem monokultur dan polikultur.</p>
+                    </div>
+                    <div class="p-6 border border-slate-200 rounded-2xl hover:border-accent-500 transition-colors bg-slate-50/50 flex flex-col justify-center">
+                        <div class="text-accent-500 font-black text-4xl mb-2 opacity-30">04</div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">Pengaruh Parameter</h4>
+                        <p class="text-slate-600 text-sm">Menganalisis kontribusi parameter diameter batang (DBH) dan tinggi tanaman terhadap estimasi total karbon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Gap & Tinjauan Pustaka Section -->
+    <section id="gap" class="py-20 bg-brand-900 text-white relative overflow-hidden min-h-fit">
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-brand-700 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-accent-600 rounded-full blur-3xl opacity-20"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-accent-500 font-bold tracking-wider uppercase text-sm mb-2 block">Kajian Literatur</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Tinjauan Pustaka & Research Gap</h2>
+                <div class="w-24 h-1 bg-accent-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                <!-- Konsep Ekologi Card -->
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-3xl h-full">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-white text-brand-900 rounded-full flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-seedling"></i>
                         </div>
-                        <div class="info-box">
-                            <h3><i class="fa-solid fa-leaf"></i> Paradoks Kelapa Sawit</h3>
-                            <p>Ekspansi sawit kerap dikaitkan dengan deforestasi, namun perkebunan ini secara biologis mampu menyerap karbon melalui akumulasi biomassa di atas permukaan tanah.</p>
+                        <h3 class="text-2xl font-bold text-white">Dinamika Monokultur & Polikultur</h3>
+                    </div>
+                    <ul class="space-y-4 text-brand-50">
+                        <li class="border-b border-brand-700/50 pb-4">
+                            <strong class="text-accent-400 block mb-1"><i class="fa-solid fa-caret-right"></i> Monokultur Sawit (Dislich et al., 2021)</strong>
+                            Lahan monokultur menyebabkan penurunan kompleksitas vegetasi, struktur tajuk homogen, sehingga cadangan biomassa & karbon lebih rendah dibanding ekosistem multistrata.
+                        </li>
+                        <li class="border-b border-brand-700/50 pb-4">
+                            <strong class="text-accent-400 block mb-1"><i class="fa-solid fa-caret-right"></i> Karet sebagai Sink Karbon (Chave et al., 2014)</strong>
+                            Karet (*Hevea brasiliensis*) adalah dikotil dengan ketumpatan kayu solid ($0.53~g/cm^3$), bertindak sebagai tangki penyimpan karbon (sink) yang sangat kuat di area agroforestri.
+                        </li>
+                        <li>
+                            <strong class="text-accent-400 block mb-1"><i class="fa-solid fa-caret-right"></i> Estimasi Non-Destruktif (Hairiah & Rahayu, 2017)</strong>
+                            Pendekatan matematis alometrik penting diterapkan untuk menghindari pemanenan destruktif yang merugikan ekonomi pekebun swadaya.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Rosaprana Card -->
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-3xl h-full flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 bg-white text-brand-900 rounded-full flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Studi Rosaprana et al. (2023)</h3>
+                        </div>
+                        <p class="text-brand-100 mb-6 leading-relaxed">
+                            Fokus mengestimasi karbon atas permukaan pada lahan <strong class="text-white">monokultur sawit</strong> dan <strong class="text-white">agroforestri sawit-sengon</strong> di Kalimantan Tengah.
+                        </p>
+                        <div class="bg-brand-900/50 p-6 rounded-2xl border border-brand-700 mb-4">
+                            <h4 class="text-accent-500 font-semibold mb-3">Hasil Signifikan:</h4>
+                            <div class="flex justify-between items-center border-b border-brand-700/50 pb-2 mb-2">
+                                <span>Agroforestri (Sawit-Sengon)</span>
+                                <span class="font-bold text-xl text-green-400">63,14 <span class="text-sm font-normal">tonC/ha</span></span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Monokultur Sawit</span>
+                                <span class="font-bold text-xl text-brand-300">46,70 <span class="text-sm font-normal">tonC/ha</span></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="info-box accent">
-                        <h3 style="color: var(--accent-yellow);"><i class="fa-solid fa-users"></i> Urgensi Lahan Swadaya</h3>
-                        <ul class="custom-list">
-                            <li><i class="fa-solid fa-triangle-exclamation"></i> <strong>Kesenjangan Data:</strong> Sebagian besar riset karbon dilakukan di perkebunan korporasi berskala besar, sementara data kebun rakyat sangat minim.</li>
-                            <li><i class="fa-solid fa-layer-group"></i> <strong>Heterogenitas Lahan:</strong> Petani swadaya sering menerapkan sistem polikultur (agroforestri) seperti sawit-karet yang diduga menyimpan karbon lebih tinggi.</li>
-                            <li><i class="fa-solid fa-microscope"></i> <strong>Kebutuhan Metode:</strong> Diperlukan metode estimasi non-destruktif yang tidak merusak tanaman produktif milik petani.</li>
-                        </ul>
+                    <p class="text-sm text-brand-200 italic mt-auto">Kesimpulan: Sistem multistrata terbukti menyimpan karbon lebih tinggi berkat tambahan biomassa berkayu.</p>
+                </div>
+            </div>
+
+            <!-- The Gap Full Width -->
+            <div class="bg-gradient-to-r from-accent-500 to-accent-600 p-8 rounded-3xl text-slate-900 shadow-xl">
+                <div class="flex items-center gap-4 mb-4">
+                    <h3 class="text-2xl font-bold">Kesenjangan Penelitian (Research Gap)</h3>
+                </div>
+                <p class="mb-4 font-medium">Penelitian ini mengisi celah dari studi sebelumnya melalui beberapa pembeda utama:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white/20 p-4 rounded-xl">
+                        <strong class="block mb-2 text-lg"><i class="fa-solid fa-tree opacity-70"></i> Komoditas Sela</strong>
+                        <span class="text-sm opacity-90">Menggunakan <strong>Karet (Hevea brasiliensis)</strong>, tanaman dikotil berkayu padat, bukan Sengon yang pertumbuhannya cepat namun berkayu lunak.</span>
+                    </div>
+                    <div class="bg-white/20 p-4 rounded-xl">
+                        <strong class="block mb-2 text-lg"><i class="fa-solid fa-map-location-dot opacity-70"></i> Geografis & Subjek</strong>
+                        <span class="text-sm opacity-90">Bergeser ke kebun rakyat di <strong>Desa Bukit Mulya, Bengkulu</strong>. Fokus pada petani swadaya, bukan korporasi skala besar.</span>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- SLIDE 3: TUJUAN PENELITIAN -->
-        <div class="slide-container">
-            <div class="content">
-                <h2 class="slide-title">Tujuan Penelitian</h2>
-                <p style="text-align: center; margin-bottom: 30px; font-size: 18px;">Penelitian ini bertujuan untuk mengukur dan membandingkan kapasitas sekuestrasi karbon secara spesifik melalui empat tahapan analisis:</p>
-                
-                <div class="grid-4">
-                    <div class="info-box">
-                        <h3><span class="fa-layers fa-fw"><i class="fa-solid fa-circle" style="color: var(--primary-green);"></i><i class="fa-inverse fa-solid fa-1" style="transform: shrink-6;"></i></span> Estimasi Monokultur</h3>
-                        <p>Menghitung estimasi biomassa dan cadangan karbon atas permukaan (AGB) pada kebun sawit sistem monokultur petani swadaya.</p>
-                    </div>
-                    <div class="info-box">
-                        <h3><span class="fa-layers fa-fw"><i class="fa-solid fa-circle" style="color: var(--primary-green);"></i><i class="fa-inverse fa-solid fa-2" style="transform: shrink-6;"></i></span> Estimasi Polikultur</h3>
-                        <p>Menghitung estimasi biomassa dan cadangan karbon (AGB) pada sistem polikultur (sawit-karet) milik petani swadaya.</p>
-                    </div>
-                    <div class="info-box accent">
-                        <h3 style="color: #ca8a04;"><span class="fa-layers fa-fw"><i class="fa-solid fa-circle" style="color: var(--accent-yellow);"></i><i class="fa-inverse fa-solid fa-3" style="transform: shrink-6;"></i></span> Analisis Komparasi</h3>
-                        <p>Menganalisis perbedaan signifikan cadangan karbon antara sistem monokultur dan polikultur menggunakan analisis statistik (Uji-T).</p>
-                    </div>
-                    <div class="info-box accent">
-                        <h3 style="color: #ca8a04;"><span class="fa-layers fa-fw"><i class="fa-solid fa-circle" style="color: var(--accent-yellow);"></i><i class="fa-inverse fa-solid fa-4" style="transform: shrink-6;"></i></span> Pengaruh Parameter</h3>
-                        <p>Menganalisis korelasi dan pengaruh parameter Diameter (DBH) serta Tinggi Tanaman terhadap total cadangan karbon.</p>
-                    </div>
-                </div>
+    <!-- Metode Section -->
+    <section id="metode" class="py-20 bg-slate-50 min-h-fit">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-900 mb-4">Metodologi & Estimasi Non-Destruktif</h2>
+                <div class="w-24 h-1 bg-accent-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-600 max-w-2xl mx-auto">Pengambilan data difokuskan di hamparan kebun Desa Bukit Mulya, Kec. Air Rami, Kab. Mukomuko, Bengkulu menggunakan Persamaan Alometrik spesifik-spesies.</p>
             </div>
-        </div>
 
-        <!-- SLIDE 4: TINJAUAN PUSTAKA -->
-        <div class="slide-container">
-            <div class="content">
-                <h2 class="slide-title">Tinjauan Pustaka: Monokultur vs Polikultur</h2>
-                <div class="two-column">
-                    <div class="info-box">
-                        <h3 style="justify-content: center;"><i class="fa-solid fa-seedling"></i> Monokultur Sawit</h3>
-                        <hr style="border: 1px solid #e2e8f0; margin: 15px 0;">
-                        <ul class="custom-list">
-                            <li><i class="fa-solid fa-angle-right"></i> Sawit (<em>Elaeis guineensis</em>) merupakan monokotil dengan densitas batang relatif lebih rendah dibanding kayu keras.</li>
-                            <li><i class="fa-solid fa-angle-right"></i> Memiliki struktur tajuk tunggal (homogen) yang membatasi stratifikasi penyerapan cahaya matahari.</li>
-                        </ul>
-                    </div>
-                    <div class="info-box">
-                        <h3 style="justify-content: center;"><i class="fa-solid fa-tree"></i> Polikultur (Sawit - Karet)</h3>
-                        <hr style="border: 1px solid #e2e8f0; margin: 15px 0;">
-                        <ul class="custom-list">
-                            <li><i class="fa-solid fa-angle-right"></i> Karet (<em>Hevea brasiliensis</em>) adalah tanaman dikotil dengan ketumpatan kayu padat (sekitar 0,53 g/cm³), efisien menyimpan karbon.</li>
-                            <li><i class="fa-solid fa-angle-right"></i> Sistem tajuk bertingkat (multi-strata) meningkatkan tangkapan cahaya dan akumulasi karbon dalam ekosistem.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 5: METODE ESTIMASI -->
-        <div class="slide-container">
-            <div class="content">
-                <h2 class="slide-title">Metode Estimasi Non-Destruktif</h2>
-                <p style="text-align: center; margin-bottom: 20px;">Menggunakan <strong>Persamaan Alometrik</strong> untuk mengestimasi biomassa tanpa pemanenan destruktif (tebang).</p>
-                
-                <div class="two-column" style="gap: 20px;">
-                    <div class="info-box" style="margin-bottom: 0;">
-                        <h3 style="justify-content: center;">Tanaman Kelapa Sawit</h3>
-                        <p style="text-align: center;">Model berdasarkan Diameter (D):</p>
-                        <div class="math-box">W = 0.003 &times; D<sup>2.761</sup></div>
-                        <p style="text-align: center; margin-top: 15px;">Model berdasarkan Tinggi (H):</p>
-                        <div class="math-box">AGB = 0.0976 &times; H + 0.0706</div>
-                    </div>
-                    
-                    <div class="info-box" style="margin-bottom: 0;">
-                        <h3 style="justify-content: center;">Tanaman Karet (Dikotil)</h3>
-                        <p style="text-align: center;">Model Chave et al. berbasis Ketumpatan Kayu (&rho;) dan DBH (D):</p>
-                        <div class="math-box" style="padding: 15px 10px; margin-top: 15px;">
-                            AGB = &rho; &times; exp[-1.499 + 2.148 &times; ln(D) + 0.207 &times; (ln(D))<sup>2</sup> - 0.0281 &times; (ln(D))<sup>3</sup>]
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Rumus Sawit -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+                    <h3 class="text-xl font-bold text-brand-900 border-b border-slate-100 pb-4 mb-6 flex items-center gap-3">
+                        <img src="https://api.iconify.design/twemoji:palm-tree.svg" class="w-8 h-8" alt="Sawit"> Persamaan Kelapa Sawit
+                    </h3>
+                    <div class="space-y-6 flex-grow">
+                        <div>
+                            <p class="text-sm text-slate-500 mb-2 font-semibold">Model Empiris berbasis DBH:</p>
+                            <div class="bg-slate-50 p-4 rounded-lg font-mono text-center border border-slate-200 text-lg shadow-inner">
+                                <span class="text-brand-700 font-bold">W</span> = 0.003 &times; D<sup>2.761</sup>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500 mb-2 font-semibold">Alternatif Tinggi Tajuk (IOPRI):</p>
+                            <div class="bg-slate-50 p-4 rounded-lg font-mono text-center border border-slate-200 text-lg shadow-inner">
+                                <span class="text-brand-700 font-bold">AGB</span> = 0.0976 &times; H + 0.0706
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 text-sm text-slate-600 mt-auto">
+                            <strong class="text-blue-800">Keterangan:</strong><br>
+                            <ul class="list-disc pl-5 mt-1 space-y-1">
+                                <li><strong>W / AGB</strong> = Biomassa atas permukaan (kg/pohon)</li>
+                                <li><strong>D</strong> = Diameter setinggi dada / DBH (cm)</li>
+                                <li><strong>H</strong> = Tinggi tajuk total (meter)</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
 
-                <div style="background: #14532d; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px;">
-                    <p style="color: #ffffff; margin: 0; font-size: 18px;"><strong>Konversi Cadangan Karbon (Carbon Stock)</strong></p>
-                    <p style="color: #fde047; margin: 5px 0 0 0; font-size: 18px;">C = Biomassa &times; 0,47 <span style="font-size: 14px; color: #cbd5e1; font-weight: normal;">(Fraksi karbon 47%)</span></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 6: DESAIN PLOT -->
-        <div class="slide-container">
-            <div class="content">
-                <h2 class="slide-title">Desain & Layout Plot Inventarisasi</h2>
-                <div class="two-column" style="grid-template-columns: 1fr 1fr;">
-                    <div style="display: flex; flex-direction: column; justify-content: center;">
-                        <ul class="custom-list">
-                            <li><i class="fa-solid fa-location-dot"></i> <strong>Lokasi:</strong> Lahan petani swadaya di Bengkulu.</li>
-                            <li><i class="fa-solid fa-vector-square"></i> <strong>Dimensi Plot:</strong> 20 m &times; 100 m (0,2 Hektare).</li>
-                            <li><i class="fa-solid fa-arrows-turn-right"></i> <strong>Arah Transek:</strong> Memotong arah baris tanam untuk mengakomodir variasi vegetasi.</li>
-                            <li><i class="fa-solid fa-chart-pie"></i> <strong>Intensitas Sampling:</strong> Memenuhi standar minimum kelayakan inventarisasi.</li>
-                            <li><i class="fa-solid fa-map-location-dot"></i> <strong>Pemetaan:</strong> Plot diletakkan pada sistem monokultur murni dan sistem agroforestri (karet-sawit).</li>
-                        </ul>
-                    </div>
-                    <div class="image-wrapper">
-                        <img src="image_12b9c9.png" alt="Desain Layout Plot" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang';">
-                        <p class="caption">Gambar 1. Desain Layout Plot Inventarisasi</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 7: PENGUKURAN & ANALISIS -->
-        <div class="slide-container">
-            <div class="content">
-                <h2 class="slide-title">Pengukuran & Analisis Data</h2>
-                <div class="two-column" style="grid-template-columns: 0.8fr 1.2fr;">
-                    <div class="image-wrapper">
-                        <img src="image_12b9e9.png" alt="Pengukuran DBH" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang';">
-                        <p class="caption">Gambar 2. Pengukuran Diameter Setinggi Dada (DBH)</p>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 20px;">
-                        <div class="info-box" style="padding: 20px;">
-                            <h3 style="margin-bottom: 10px;"><i class="fa-solid fa-ruler"></i> Parameter Ukur Utama</h3>
-                            <p>Pengambilan data berfokus pada pengukuran <em>Diameter at Breast Height</em> (DBH) menggunakan pita ukur/phi band pada ketinggian 1,3 meter.</p>
+                <!-- Rumus Karet -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+                    <h3 class="text-xl font-bold text-brand-900 border-b border-slate-100 pb-4 mb-6 flex items-center gap-3">
+                        <img src="https://api.iconify.design/twemoji:deciduous-tree.svg" class="w-8 h-8" alt="Karet"> Persamaan Pohon Karet
+                    </h3>
+                    <div class="space-y-6 flex-grow">
+                        <div>
+                            <p class="text-sm text-slate-500 mb-2 font-semibold">Model Chave et al. (Kayu Keras Tropis):</p>
+                            <div class="bg-slate-50 p-4 rounded-lg font-mono text-center border border-slate-200 overflow-x-auto whitespace-nowrap shadow-inner text-sm md:text-base">
+                                <span class="text-brand-700 font-bold">AGB</span> = &rho; &times; exp[-1.499 + 2.148 ln(D) + 0.207(ln(D))<sup>2</sup> - 0.0281(ln(D))<sup>3</sup>]
+                            </div>
                         </div>
-                        <div class="info-box accent" style="padding: 20px;">
-                            <h3 style="margin-bottom: 10px; color: #ca8a04;"><i class="fa-solid fa-laptop-code"></i> Teknik Analisis Data</h3>
-                            <ul class="custom-list">
-                                <li><i class="fa-solid fa-check"></i> Tabulasi data diameter dan tinggi.</li>
-                                <li><i class="fa-solid fa-check"></i> Perhitungan biomassa menggunakan Microsoft Excel.</li>
-                                <li><i class="fa-solid fa-check"></i> <strong>Uji-t (Independent Sample T-Test):</strong> Menguji signifikansi perbedaan cadangan karbon.</li>
+                        
+                        <div class="mt-4 bg-brand-50 border border-brand-200 p-4 rounded-xl">
+                            <p class="text-sm text-brand-900 font-bold mb-2">Konversi Cadangan Karbon (Carbon Stock)</p>
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <span class="font-mono text-lg text-brand-700 font-bold">Cb = B &times; 0.47</span>
+                                <span class="text-xs text-brand-600 bg-brand-100 px-2 py-1 rounded font-semibold border border-brand-200">Asumsi Fraksi Karbon 47%</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 text-sm text-slate-600 mt-auto">
+                            <strong class="text-amber-800">Keterangan:</strong><br>
+                            <ul class="list-disc pl-5 mt-1 space-y-1">
+                                <li><strong>AGB / B</strong> = Biomassa atas permukaan (kg/pohon)</li>
+                                <li><strong>&rho; (rho)</strong> = Kepadatan jenis kayu (0.53 g/cm³ untuk Karet)</li>
+                                <li><strong>D</strong> = Diameter setinggi dada / DBH (cm)</li>
+                                <li><strong>Cb</strong> = Cadangan karbon biomassa (ton/ha)</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SLIDE 8: PENUTUP & TANYA JAWAB (INTERAKTIF GOOGLE SHEETS) -->
-        <div class="slide-container">
-            <div class="content" style="display: flex; flex-direction: column; height: 100%;">
-                <div style="flex-shrink: 0; display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; border-bottom: 4px solid var(--accent-yellow); padding-bottom: 10px;">
-                    <h2 class="slide-title" style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">Sesi Tanya Jawab</h2>
-                    <h2 style="color: var(--primary-green); font-size: 32px; margin: 0;"><i class="fa-solid fa-hands-praying" style="color: var(--accent-yellow);"></i> Terima Kasih</h2>
-                </div>
-                
-                <div class="two-column" style="flex-grow: 1; min-height: 0; margin-bottom: 0; gap: 30px;">
-                    <!-- Form Input Catatan -->
-                    <div class="info-box" style="display: flex; flex-direction: column; gap: 10px; padding: 20px; margin: 0; height: 100%;">
-                        <h3 style="margin-bottom: 0; font-size: 18px;"><i class="fa-solid fa-pen-to-square"></i> Sampaikan Komentar/Pertanyaan</h3>
-                        <input type="text" id="commentName" placeholder="Username (Boleh Anonim)" style="padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 14px; outline: none;">
-                        <textarea id="commentText" placeholder="Ketik pertanyaan atau saran Anda di sini..." style="padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 14px; outline: none; resize: none; flex-grow: 1;"></textarea>
-                        
-                        <!-- Status Pengiriman -->
-                        <div id="submitStatus" style="font-size: 13px; font-style: italic; color: var(--primary-green); display: none;">Mengirim komentar...</div>
-                        
-                        <button onclick="addComment()" style="background: var(--primary-green); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: bold; transition: background 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Kirim Komentar</button>
+            <!-- Desain & Layout Plot dan Pengukuran -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                <!-- Layout Plot -->
+                <div class="flex flex-col">
+                    <h3 class="text-2xl font-bold text-brand-900 mb-6">Desain & Layout Plot Inventarisasi</h3>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                        <img src="image_12b9c9.png" alt="Desain Layout Plot" class="w-full rounded-xl object-contain bg-slate-50 max-h-64" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang';">
+                        <p class="text-center text-sm text-slate-500 mt-3 italic">Gambar 1. Desain Layout Plot Inventarisasi</p>
                     </div>
-                    
-                    <!-- Daftar Catatan Tersimpan -->
-                    <div class="info-box accent" style="display: flex; flex-direction: column; padding: 20px; margin: 0; height: 100%;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <h3 style="margin-bottom: 0; color: #ca8a04; font-size: 18px;"><i class="fa-solid fa-comments"></i> Forum Diskusi</h3>
-                            <button onclick="fetchComments()" style="background: transparent; color: var(--primary-green); border: none; cursor: pointer; font-size: 14px; text-decoration: underline;"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
-                        </div>
-                        
-                        <!-- Indikator Loading -->
-                        <div id="loadingComments" style="text-align: center; color: var(--primary-green); padding: 20px; display: none;">
-                            <i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><span style="font-size: 14px; margin-top: 10px; display: inline-block;">Memuat komentar dari server...</span>
-                        </div>
+                    <ul class="space-y-3 text-slate-600 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex-grow">
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-location-dot text-accent-500 mt-1"></i> <strong>Lokasi:</strong> Desa Bukit Mulya, Mukomuko, Bengkulu.</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-vector-square text-accent-500 mt-1"></i> <strong>Dimensi Plot:</strong> $20~m \times 100~m$ (0,2 Hektare). Mencakup intensitas sampling 20% per hektare.</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-arrows-turn-right text-accent-500 mt-1"></i> <strong>Arah Transek:</strong> Memotong arah baris tanam untuk mengakomodasi jarak tanam lebar.</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-map-location-dot text-accent-500 mt-1"></i> <strong>Inklusi Pohon:</strong> Individu dengan batang masuk >50% ke batas delineasi plot wajib diukur.</li>
+                    </ul>
+                </div>
 
-                        <div id="commentList" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 5px; border-radius: 8px; background: #f8fafc; padding: 15px; border: 1px solid #e2e8f0;">
-                            <!-- Catatan akan masuk di sini via JS -->
+                <!-- Pengukuran DBH -->
+                <div class="flex flex-col">
+                    <h3 class="text-2xl font-bold text-brand-900 mb-6">Pengukuran & Analisis Data</h3>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                        <img src="image_12b9e9.png" alt="Pengukuran DBH" class="w-full rounded-xl object-contain bg-slate-50 max-h-64" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300?text=Gambar+Hilang';">
+                        <p class="text-center text-sm text-slate-500 mt-3 italic">Gambar 2. Pengukuran Diameter Setinggi Dada (DBH)</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                        <div class="bg-brand-50 p-5 rounded-2xl border border-brand-100 flex flex-col">
+                            <h4 class="font-bold text-brand-800 mb-2"><i class="fa-solid fa-ruler mr-2"></i> Parameter Ukur Utama</h4>
+                            <p class="text-slate-600 text-sm flex-grow">Pengukuran <em>Diameter at Breast Height</em> (DBH) menggunakan pita ukur/phi band setinggi 1,3 meter secara non-destruktif.</p>
+                        </div>
+                        <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 flex flex-col">
+                            <h4 class="font-bold text-amber-800 mb-2"><i class="fa-solid fa-laptop-code mr-2"></i> Analisis Kuantitatif</h4>
+                            <ul class="text-slate-600 text-sm space-y-2 flex-grow">
+                                <li><i class="fa-solid fa-check text-amber-500 mr-2"></i> Tabulasi *Tally Sheet*</li>
+                                <li><i class="fa-solid fa-check text-amber-500 mr-2"></i> Konversi alometrik biomassa</li>
+                                <li><i class="fa-solid fa-check text-amber-500 mr-2"></i> <strong>Uji Beda (T-Test)</strong> menggunakan SPSS/R.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <!-- Steps UI -->
+            <div class="bg-brand-900 rounded-3xl p-8 md:p-12 text-white">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/20">
+                    <div class="pt-6 md:pt-0 px-4">
+                        <div class="w-16 h-16 bg-accent-500 text-brand-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 font-bold shadow-lg">1</div>
+                        <h4 class="font-bold text-lg mb-2">Penentuan & Pembuatan Plot</h4>
+                        <p class="text-sm text-brand-100">Penentuan lahan dengan purposive sampling, pembuatan plot 0,2 Ha memotong arah tanam.</p>
+                    </div>
+                    <div class="pt-6 md:pt-0 px-4">
+                        <div class="w-16 h-16 bg-accent-500 text-brand-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 font-bold shadow-lg">2</div>
+                        <h4 class="font-bold text-lg mb-2">Sensus & Pengukuran Lapangan</h4>
+                        <p class="text-sm text-brand-100">Inventarisasi seluruh individu pohon (sawit & karet) dan pengukuran DBH tinggi 1,3 m.</p>
+                    </div>
+                    <div class="pt-6 md:pt-0 px-4">
+                        <div class="w-16 h-16 bg-accent-500 text-brand-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 font-bold shadow-lg">3</div>
+                        <h4 class="font-bold text-lg mb-2">Pengolahan & Analisis Statistik</h4>
+                        <p class="text-sm text-brand-100">Estimasi persamaan alometrik dan Uji komparasi beda rata-rata (T-Test).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Forum Diskusi Section -->
+    <section id="diskusi" class="py-20 bg-white border-t border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-900 mb-4">Forum Diskusi Terbuka</h2>
+                <div class="w-24 h-1 bg-accent-500 mx-auto rounded-full mb-4"></div>
+                <p class="text-slate-600">Sampaikan pertanyaan, masukan, atau tinjauan terkait proposal ini.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <!-- Form Input -->
+                <div class="lg:col-span-2 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 h-fit sticky top-24">
+                    <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-brand-600"></i> Kirim Masukan
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Nama Pengguna (Maks. 25 Karakter)</label>
+                            <input type="text" id="commentName" maxlength="25" placeholder="Contoh: Budi (Anonim juga boleh)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow text-sm">
+                            <p id="nameError" class="text-xs text-red-500 mt-1 hidden">Nama hanya boleh berisi huruf, angka, spasi, atau titik koma.</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Komentar / Pertanyaan</label>
+                            <textarea id="commentText" rows="4" placeholder="Ketik saran atau masukan Anda di sini..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow text-sm resize-none"></textarea>
+                        </div>
+                        
+                        <div id="submitStatus" class="text-sm font-medium text-brand-600 hidden animate-pulse bg-brand-50 p-2 rounded text-center">
+                            <i class="fa-solid fa-circle-notch fa-spin"></i> Sedang mengirim...
+                        </div>
+                        
+                        <button onclick="addComment()" class="w-full bg-brand-700 hover:bg-brand-900 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg flex justify-center items-center gap-2">
+                            Kirim <i class="fa-regular fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feed Diskusi -->
+                <div class="lg:col-span-3">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                            <i class="fa-regular fa-comments text-accent-500"></i> Daftar Komentar
+                        </h3>
+                        <button onclick="fetchComments()" class="text-sm text-brand-600 hover:text-brand-800 flex items-center gap-1 font-medium bg-brand-50 px-3 py-1.5 rounded-full transition-colors">
+                            <i class="fa-solid fa-rotate-right"></i> Refresh
+                        </button>
+                    </div>
+
+                    <div id="loadingComments" class="text-center py-12 hidden">
+                        <i class="fa-solid fa-spinner fa-spin text-3xl text-brand-500 mb-3"></i>
+                        <p class="text-slate-500 text-sm">Memuat data dari server...</p>
+                    </div>
+
+                    <div id="commentList" class="space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Komentar akan dirender via JS di sini -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 text-brand-100 py-10 border-t border-brand-700 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <i class="fa-solid fa-leaf text-accent-500 text-3xl mb-4"></i>
+            <p class="font-bold text-white text-lg mb-1">Proposal Tugas Akhir</p>
+            <p class="text-sm mb-6">Program Studi Pengelolaan Perkebunan - Politeknik LPP Yogyakarta</p>
+            <div class="w-16 h-px bg-brand-700 mx-auto mb-6"></div>
+            <p class="text-xs text-brand-300">&copy; 2026 Muhammad Ibnu Mukhlisin Anggraito. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating Navigation Buttons (Navigasi Slide) -->
+    <div class="fixed bottom-8 right-8 z-[100] flex gap-3 opacity-90 hover:opacity-100 transition-opacity">
+        <button onclick="prevSection()" title="Bagian Sebelumnya (Panah Kiri)" class="w-12 h-12 bg-accent-500 hover:bg-accent-600 text-brand-900 rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.3)] flex items-center justify-center text-xl transition-transform hover:scale-110 border-2 border-transparent hover:border-white/50">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button onclick="nextSection()" title="Bagian Berikutnya (Panah Kanan)" class="w-12 h-12 bg-accent-500 hover:bg-accent-600 text-brand-900 rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.3)] flex items-center justify-center text-xl transition-transform hover:scale-110 border-2 border-transparent hover:border-white/50">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
     </div>
 
-    <!-- JAVASCRIPT UNTUK FUNGSI SLIDER DAN AUTO-SCALE -->
+    <!-- Script Integrasi & Navigasi -->
     <script>
-        const slides = document.querySelectorAll('.slide-container');
-        const counter = document.getElementById('counter');
-        let currentSlide = 0;
+        // Logika Auto-hide Navbar
+        const navbar = document.getElementById('navbar');
+        let lastScrollY = window.scrollY;
 
-        function updateCounterColor() {
-            if (currentSlide === 0) {
-                counter.style.color = '#f8fafc';
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY && window.scrollY > 80) {
+                // Sembunyikan navbar saat scroll ke bawah
+                navbar.classList.add('-translate-y-full');
             } else {
-                counter.style.color = window.innerWidth <= 768 ? '#64748b' : '#94a3b8';
+                // Munculkan navbar saat scroll ke atas atau berada di paling atas
+                navbar.classList.remove('-translate-y-full');
             }
-        }
+            lastScrollY = window.scrollY;
+        });
 
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            currentSlide = (index + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-            counter.innerText = `${currentSlide + 1} / ${slides.length}`;
-            updateCounterColor();
-            if (window.innerWidth <= 768) {
-                window.scrollTo(0, 0); // Scroll otomatis ke atas jika di HP
-            }
-        }
-
-        function nextSlide() { showSlide(currentSlide + 1); }
-        function prevSlide() { showSlide(currentSlide - 1); }
-
-       
-
-        function scalePresentation() {
-            const area = document.getElementById('presentation-area');
-            if (window.innerWidth <= 768) {
-                area.style.transform = 'none';
-                area.style.width = '100%';
-                area.style.height = '100%';
-            } else {
-                area.style.width = '1100px';
-                area.style.height = '650px';
-                const scaleX = (window.innerWidth - 40) / 1100;
-                const scaleY = (window.innerHeight - 40) / 650;
-                const scale = Math.min(scaleX, scaleY, 1.2); 
-                area.style.transform = `scale(${scale})`;
-            }
-            updateCounterColor();
-        }
-
-        window.addEventListener('resize', scalePresentation);
-        scalePresentation();
-        showSlide(0);
-
-        
-
-        // =======================================================
-        // FITUR KOMENTAR & REPLY (TERINTEGRASI GOOGLE SHEETS)
-        // =======================================================
-        
-        // PASTIKAN URL INI SUDAH DIGANTI DENGAN URL WEB APP MILIK ANDA
         const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycby9owGGN6Dh6zf_nrb_CTQ9fp5wrkohgIRitjEfsI9m4Y8c7ya18h73wZ_gpGPpsrb9Jw/exec"; 
 
         const commentListEl = document.getElementById('commentList');
         const loadingEl = document.getElementById('loadingComments');
         const statusEl = document.getElementById('submitStatus');
 
+        // Regex Validation: Only allow alphanumeric, spaces, and basic punctuation. No pure symbols/emojis.
+        function validateUsername(name) {
+            const regex = /^[a-zA-Z0-9\s.,'-]+$/;
+            return regex.test(name) || name === 'Anonim';
+        }
+
         async function fetchComments() {
-            // Perbaikan: Hapus pengecekan URL yang spesifik karena itu yang memicu error
             if (!GOOGLE_SHEETS_URL.includes("script.google.com")) {
-                commentListEl.innerHTML = '<p style="text-align:center; color:#ef4444; font-style:italic; margin-top: 20px;">URL Google Apps Script tidak valid.</p>';
+                commentListEl.innerHTML = '<div class="bg-red-50 text-red-500 p-4 rounded-xl text-center text-sm border border-red-100">URL Google Apps Script belum valid.</div>';
                 return;
             }
 
-            commentListEl.style.display = 'none';
-            loadingEl.style.display = 'block';
+            commentListEl.classList.add('hidden');
+            loadingEl.classList.remove('hidden');
 
             try {
                 const response = await fetch(GOOGLE_SHEETS_URL);
@@ -630,10 +548,10 @@
                 renderComments(comments);
             } catch (error) {
                 console.error("Error fetching comments:", error);
-                commentListEl.innerHTML = '<p style="text-align:center; color:#ef4444; margin-top: 20px;">Gagal memuat komentar. Periksa koneksi internet Anda.</p>';
+                commentListEl.innerHTML = '<div class="bg-red-50 text-red-500 p-4 rounded-xl text-center text-sm border border-red-100">Gagal memuat komentar. Periksa koneksi internet Anda.</div>';
             } finally {
-                loadingEl.style.display = 'none';
-                commentListEl.style.display = 'flex';
+                loadingEl.classList.add('hidden');
+                commentListEl.classList.remove('hidden');
             }
         }
 
@@ -641,52 +559,91 @@
             commentListEl.innerHTML = '';
             
             if (!comments || comments.length === 0) {
-                commentListEl.innerHTML = '<p style="text-align:center; color:#94a3b8; font-style:italic; margin-top: 30px;">Belum ada komentar.</p>';
+                commentListEl.innerHTML = `
+                    <div class="text-center py-10 bg-slate-50 border border-dashed border-slate-300 rounded-2xl">
+                        <i class="fa-regular fa-comment-dots text-4xl text-slate-300 mb-2"></i>
+                        <p class="text-slate-500 text-sm">Belum ada diskusi. Jadilah yang pertama berkomentar!</p>
+                    </div>`;
                 return;
             }
 
             comments.forEach(c => {
                 const div = document.createElement('div');
-                div.style.cssText = 'background: #ffffff; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; border-left: 4px solid var(--accent-yellow); box-shadow: 0 2px 4px rgba(0,0,0,0.05);';
+                // Menggunakan ID khusus untuk mempermudah fitur hide lokal
+                div.id = `comment-box-${c.id}`;
+                div.className = 'bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative group transition-all duration-300';
                 
+                div.innerHTML += '<div class="absolute left-0 top-4 bottom-4 w-1 bg-accent-500 rounded-r"></div>';
+                
+                // Fitur Hapus Lokal (UI Only)
+                div.innerHTML += `
+                    <button onclick="document.getElementById('comment-box-${c.id}').style.display='none'" title="Sembunyikan Komentar (Lokal)" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 text-sm hidden group-hover:block transition-colors">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+
                 let repliesHtml = '';
                 if (c.replies && c.replies.length > 0) {
-                    repliesHtml = '<div style="margin-top: 10px; padding-left: 10px; border-left: 2px solid #cbd5e1;">';
+                    repliesHtml = '<div class="mt-4 pt-4 border-t border-slate-100 space-y-3 pl-4 border-l-2 border-brand-100">';
                     c.replies.forEach(reply => {
                         const parts = reply.split(": ");
                         const rName = parts[0];
                         const rText = parts.slice(1).join(": ");
-                        repliesHtml += `<div style="background: #f1f5f9; padding: 8px; border-radius: 6px; margin-bottom: 5px; font-size: 13px;">
-                                            <strong style="color: var(--primary-green);">${rName}</strong>: ${rText}
-                                        </div>`;
+                        repliesHtml += `
+                            <div class="bg-slate-50 rounded-xl p-3 text-sm relative group/reply">
+                                <strong class="text-brand-700 flex items-center gap-1 mb-1">
+                                    <i class="fa-solid fa-reply text-[10px] text-brand-400"></i> ${rName}
+                                </strong>
+                                <span class="text-slate-600">${rText}</span>
+                                <button onclick="this.parentElement.style.display='none'" title="Sembunyikan Balasan" class="absolute top-2 right-2 text-slate-300 hover:text-red-500 text-xs hidden group-hover/reply:block">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>`;
                     });
                     repliesHtml += '</div>';
                 }
 
-                div.innerHTML = `
-                    <strong style="color: var(--primary-green); font-size: 15px;"><i class="fa-solid fa-user" style="margin-right: 5px; color: #94a3b8;"></i>${c.name}</strong>
-                    <p style="font-size: 14px; margin-top: 5px; margin-bottom: 10px; color: var(--text-dark); line-height: 1.4;">${c.text.replace(/\n/g, '<br>')}</p>
-                    ${repliesHtml}
-                    <div style="margin-top: 8px; display: flex; gap: 8px;" id="reply-container-${c.id}">
-                        <button onclick="showReplyForm('${c.id}')" style="background: none; border: none; color: var(--accent-yellow); font-size: 12px; font-weight: bold; cursor: pointer; padding: 0;"><i class="fa-solid fa-reply"></i> Balas</button>
+                div.innerHTML += `
+                    <div class="pl-2">
+                        <strong class="text-brand-900 font-bold flex items-center gap-2 text-[15px] pr-6">
+                            <div class="w-6 h-6 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-xs shrink-0">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <span class="truncate">${c.name}</span>
+                        </strong>
+                        <p class="text-slate-700 text-sm mt-2 mb-2 leading-relaxed whitespace-pre-line">${c.text}</p>
+                        ${repliesHtml}
+                        <div class="mt-3 flex items-center" id="reply-container-${c.id}">
+                            <button onclick="showReplyForm('${c.id}')" class="text-xs font-bold text-accent-600 hover:text-accent-700 flex items-center gap-1 transition-colors">
+                                <i class="fa-solid fa-reply"></i> Balas
+                            </button>
+                        </div>
                     </div>
                 `;
                 commentListEl.appendChild(div);
             });
-            
-            commentListEl.scrollTop = commentListEl.scrollHeight;
         }
 
         async function addComment() {
             const nameInput = document.getElementById('commentName');
             const textInput = document.getElementById('commentText');
+            const errorMsg = document.getElementById('nameError');
             
-            const name = nameInput.value.trim() || 'Anonim';
+            let name = nameInput.value.trim() || 'Anonim';
             const text = textInput.value.trim();
             
             if (!text) { alert('Mohon isi kolom pertanyaan/saran terlebih dahulu!'); return; }
             
-            statusEl.style.display = 'block';
+            // Validasi Nama
+            if(name.length > 25) name = name.substring(0, 25);
+            if(!validateUsername(name)) {
+                errorMsg.classList.remove('hidden');
+                return;
+            } else {
+                errorMsg.classList.add('hidden');
+            }
+            
+            statusEl.classList.remove('hidden');
 
             try {
                 await fetch(GOOGLE_SHEETS_URL, {
@@ -703,17 +660,22 @@
                 console.error("Error posting:", error);
                 alert("Gagal mengirim komentar.");
             } finally {
-                statusEl.style.display = 'none';
+                statusEl.classList.add('hidden');
             }
         }
 
         function showReplyForm(commentId) {
             const container = document.getElementById(`reply-container-${commentId}`);
+            // Mengubah placeholder nama balasan dan default fall-back
             container.innerHTML = `
-                <input type="text" id="replyName-${commentId}" placeholder="Nama Anda" style="width: 30%; padding: 6px; font-size: 12px; border-radius: 4px; border: 1px solid #cbd5e1;">
-                <input type="text" id="replyText-${commentId}" placeholder="Ketik balasan..." style="flex-grow: 1; padding: 6px; font-size: 12px; border-radius: 4px; border: 1px solid #cbd5e1;">
-                <button onclick="sendReply('${commentId}', event)" style="background: var(--primary-green); color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 12px; cursor: pointer;">Kirim</button>
-                <button onclick="fetchComments()" style="background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 12px; cursor: pointer;">Batal</button>
+                <div class="flex flex-col w-full gap-2 mt-2 bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-inner">
+                    <input type="text" id="replyName-${commentId}" maxlength="25" placeholder="Nama Anda (Boleh Kosong)" class="w-full px-3 py-2 text-xs rounded border border-slate-300 focus:outline-none focus:border-brand-500">
+                    <textarea id="replyText-${commentId}" rows="2" placeholder="Ketik balasan Anda..." class="w-full px-3 py-2 text-xs rounded border border-slate-300 focus:outline-none focus:border-brand-500 resize-none"></textarea>
+                    <div class="flex justify-end gap-2 mt-1">
+                        <button onclick="fetchComments()" class="text-slate-500 hover:text-slate-700 px-3 py-1.5 text-xs font-medium transition-colors bg-white border border-slate-300 rounded">Batal</button>
+                        <button onclick="sendReply('${commentId}', event)" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-1.5 rounded text-xs font-bold transition-colors">Kirim</button>
+                    </div>
+                </div>
             `;
         }
 
@@ -721,10 +683,16 @@
             const nameInput = document.getElementById(`replyName-${commentId}`);
             const textInput = document.getElementById(`replyText-${commentId}`);
             
-            const name = nameInput.value.trim() || 'Pemateri';
+            // Bug Fix 1: Fallback jika kosong menjadi "Anonim" bukan "Pemateri"
+            let name = nameInput.value.trim() || 'Anonim';
             const text = textInput.value.trim();
             
             if (!text) { alert('Isi balasan terlebih dahulu!'); return; }
+            if(name.length > 25) name = name.substring(0, 25);
+            if(!validateUsername(name)) {
+                alert('Nama pengirim balasan tidak valid (hindari full simbol/emoji).');
+                return;
+            }
             
             const btn = event.target;
             btn.innerText = "Mengirim...";
@@ -746,24 +714,75 @@
                 btn.disabled = false;
             }
         }
-        // Fungsi agar slide bisa dipindah dengan tombol panah di Keyboard
-        document.addEventListener('keydown', (e) => {
-            // Mengecek apakah user sedang mengetik di input atau textarea
-            const isTyping = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
-            
-            // Jika sedang mengetik, hentikan fungsi ini agar tidak pindah slide
-            if (isTyping) return;
 
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-                prevSlide();
-            }
+        // Fetch comments on page load
+        fetchComments();
+
+        // ==========================================
+        // Logika Navigasi Slide (Kiri/Kanan)
+        // ==========================================
+        // Menggunakan filter agar tag section yang kosong tidak terbaca
+        const navSections = [document.querySelector('header'), ...Array.from(document.querySelectorAll('section')).filter(s => s.id)];
+        let currentSectionIndex = 0;
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -60% 0px', // Menyesuaikan trigger point agar akurat
+            threshold: 0
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = navSections.indexOf(entry.target);
+                    if (index !== -1) currentSectionIndex = index;
+                }
+            });
+        }, observerOptions);
+
+        navSections.forEach(sec => {
+            if (sec) sectionObserver.observe(sec);
         });
 
-        // Panggil fetchComments jika ingin data ditarik sejak awal
-        fetchComments();
-    </script>
+        window.scrollToSection = function(index) {
+            if (index >= 0 && index < navSections.length) {
+                const navbarHeight = 64;
+                const target = navSections[index];
+                const y = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+                currentSectionIndex = index; // update force index
+            }
+        };
 
+        window.nextSection = function() {
+            if (currentSectionIndex < navSections.length - 1) {
+                scrollToSection(currentSectionIndex + 1);
+            }
+        };
+
+        // Bug Fix 5: Memastikan currentSectionIndex > 0 sebelum pindah prev, hindari index ke -1
+        window.prevSection = function() {
+            if (currentSectionIndex > 0) {
+                scrollToSection(currentSectionIndex - 1);
+            } else {
+                // Berada di index paling atas (header), pastikan mentok atas
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        };
+
+        // Deteksi navigasi dengan tombol panah keyboard (Arrow Kiri & Kanan)
+        document.addEventListener('keydown', (e) => {
+            const isTyping = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+            if (isTyping) return;
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                nextSection();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSection();
+            }
+        });
+    </script>
 </body>
 </html>
