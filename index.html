@@ -30,7 +30,7 @@
     body.web-mode{ overflow:auto !important; }
     body.web-mode #slider-container{ display:block !important;width:auto !important;height:auto !important;transform:none !important;transition:none !important; }
     body.web-mode .main-slide{ width:100% !important;height:auto !important;min-height:100vh !important;overflow:visible !important;flex:none !important; }
-    body.web-mode #slide-4{ overflow:visible !important; }
+    body.web-mode #slide-5{ overflow:visible !important; } /* Sesuaikan ID Method */
     body.web-mode .method-shell{ height:auto !important;display:block !important; }
     body.web-mode .method-viewport{ overflow:visible !important;height:auto !important; }
     body.web-mode #methodSliderContainer{ display:block !important;transform:none !important;height:auto !important; }
@@ -50,15 +50,14 @@
     .main-slide::-webkit-scrollbar{ width:0; }
     .main-slide{ scrollbar-width:none; }
 
-    /* Slide 4 (Metode) never scrolls at the outer level; inner method-slides scroll */
-    #slide-4{ overflow:hidden !important; }
+    #slide-5{ overflow:hidden !important; } /* Lock outer scroll on method slide */
 
     /* Patterns / glass */
     .pattern-bg{ background-color:#14532d;background-image:radial-gradient(#22c55e .5px,transparent .5px),radial-gradient(#22c55e .5px,#14532d .5px);background-size:20px 20px;background-position:0 0,10px 10px; }
     .glass-card{ background:rgba(255,255,255,.94);backdrop-filter:blur(12px); }
 
-    /* Custom scrollbar for method-slides & textareas */
-    .custom-sb::-webkit-scrollbar{ width:5px; }
+    /* Custom scrollbar */
+    .custom-sb::-webkit-scrollbar{ width:6px; height:6px;}
     .custom-sb::-webkit-scrollbar-track{ background:#f1f5f9;border-radius:10px; }
     .custom-sb::-webkit-scrollbar-thumb{ background:#cbd5e1;border-radius:10px; }
     .custom-sb::-webkit-scrollbar-thumb:hover{ background:#94a3b8; }
@@ -80,11 +79,11 @@
     .floating-nav{ position:fixed;bottom:28px;right:28px;z-index:100;display:flex;gap:.75rem; }
     .floating-nav .icon-btn{ width:48px;height:48px;font-size:1.2rem; }
 
-    /* ── MODE TOGGLE ── */
+    /* ── MODE TOGGLE (ICON ONLY & FADE) ── */
     #modeToggle{ position:fixed;top:12px;left:12px;z-index:130;display:flex;align-items:stretch;
       background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border:1px solid rgba(226,232,240,.8);
       border-radius:9999px;padding:4px;box-shadow:0 4px 15px rgba(0,0,0,.15);
-      opacity: 0.4; transition: opacity 0.3s; }
+      opacity: 0.35; transition: opacity 0.3s; }
     #modeToggle:hover{ opacity: 1; }
     .mode-pill{ position:absolute;top:4px;left:4px;height:calc(100% - 8px);width:38px;
       background:#15803d;border-radius:9999px;transition:left var(--t-morph),width var(--t-morph);z-index:0; }
@@ -145,18 +144,9 @@
     .formula-box{ background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #86efac;
       border-radius:1rem;padding:.85rem 1.1rem;font-family:'Courier New',monospace;font-size:.95rem;
       color:#14532d;font-weight:700;text-align:center; }
-    .formula-vars{ max-height:0;overflow:hidden;transition:max-height .35s ease;
-      background:#f8fafc;border:1px solid #e2e8f0;border-radius:.75rem;margin-top:.4rem; }
-    .formula-vars.open{ max-height:500px; }
-    .formula-vars-inner{ padding:.75rem 1rem; }
-    .formula-toggle{ display:flex;align-items:center;gap:.4rem;justify-content:center;margin-top:.4rem;
-      font-size:.72rem;color:#15803d;cursor:pointer;font-weight:700;background:none;border:none;
-      font-family:inherit; }
-    .formula-toggle:hover{ text-decoration:underline; }
-
+    
     /* ── COMMENTS ── */
-    .ccard{ background:#fff;border:1px solid #e2e8f0;border-radius:1rem;padding:.9rem 1rem;
-      transition:box-shadow .2s; }
+    .ccard{ background:#fff;border:1px solid #e2e8f0;border-radius:1rem;padding:.9rem 1rem; transition:box-shadow .2s; }
     .ccard:hover{ box-shadow:0 2px 14px rgba(0,0,0,.08); }
     .rcard{ background:#f8fafc;border:1px solid #e2e8f0;border-left:3px solid #86efac;border-radius:.75rem;padding:.65rem .85rem; }
 
@@ -180,7 +170,17 @@
   <button class="mode-btn" id="btnW" onclick="setMode('web')" title="Mode Web Scroll"><i class="fa-solid fa-globe"></i></button>
 </div>
 
-<div class="progress-container" id="progressCont"></div>
+<!-- 8 Dots Progress Bar -->
+<div class="progress-container" id="progressCont">
+  <div class="progress-bar" title="Cover" onclick="goToSlide(0)"><div class="progress-fill" id="pf0"></div></div>
+  <div class="progress-bar" title="Latar Belakang" onclick="goToSlide(1)"><div class="progress-fill" id="pf1"></div></div>
+  <div class="progress-bar" title="Rumusan Masalah" onclick="goToSlide(2)"><div class="progress-fill" id="pf2"></div></div>
+  <div class="progress-bar" title="Tujuan & Manfaat" onclick="goToSlide(3)"><div class="progress-fill" id="pf3"></div></div>
+  <div class="progress-bar" title="Tinjauan & Gap" onclick="goToSlide(4)"><div class="progress-fill" id="pf4"></div></div>
+  <div class="progress-bar" title="Metodologi" onclick="goToSlide(5)"><div class="progress-fill" id="pf5"></div></div>
+  <div class="progress-bar" title="Jadwal Penelitian" onclick="goToSlide(6)"><div class="progress-fill" id="pf6"></div></div>
+  <div class="progress-bar" title="Diskusi" onclick="goToSlide(7)"><div class="progress-fill" id="pf7"></div></div>
+</div>
 
 <button class="icon-btn" style="position:fixed;top:12px;right:12px;z-index:130;" onclick="toggleMenu()" title="Navigasi Menu"><i class="fa-solid fa-bars"></i></button>
 
@@ -304,74 +304,77 @@
   </div>
 </div>
 
-<!-- ══════ SLIDE 2 · PERMASALAHAN, TUJUAN & MANFAAT ══════ -->
+<!-- ══════ SLIDE 2 · PERMASALAHAN ══════ -->
 <div class="main-slide bg-white" id="slide-2">
   <div class="min-h-screen flex flex-col p-6 sm:p-10 pt-16 max-w-6xl mx-auto pb-20">
-    
-    <!-- Permasalahan (Rumusan Masalah) -->
-    <div class="mb-12">
-        <span class="inline-flex items-center gap-2 bg-red-50 text-red-600 text-xs font-bold px-3 py-1.5 rounded-full mb-3"><i class="fa-solid fa-circle-question"></i>Permasalahan</span>
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-800 leading-tight mb-5">Rumusan Masalah</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h4 class="font-bold text-brand-900 mb-2 flex items-center gap-2 text-sm"><div class="w-6 h-6 bg-brand-200 text-brand-800 rounded-full flex items-center justify-center text-xs">1</div> Monokultur Sawit</h4>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Berapa besar estimasi biomassa dan cadangan karbon atas permukaan tanah (Above Ground Biomass) pada sistem perkebunan kelapa sawit monokultur milik petani swadaya?</p>
-            </div>
-            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h4 class="font-bold text-brand-900 mb-2 flex items-center gap-2 text-sm"><div class="w-6 h-6 bg-brand-200 text-brand-800 rounded-full flex items-center justify-center text-xs">2</div> Polikultur Sawit-Karet</h4>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Berapa besar estimasi biomassa dan cadangan karbon atas permukaan tanah (AGB) pada sistem polikultur sawit–karet milik petani swadaya?</p>
-            </div>
-            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h4 class="font-bold text-brand-900 mb-2 flex items-center gap-2 text-sm"><div class="w-6 h-6 bg-brand-200 text-brand-800 rounded-full flex items-center justify-center text-xs">3</div> Komparasi Cadangan</h4>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Apakah terdapat perbedaan cadangan karbon atas permukaan tanah yang signifikan antara sistem monokultur sawit dan sistem polikultur sawit–karet?</p>
-            </div>
-            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h4 class="font-bold text-brand-900 mb-2 flex items-center gap-2 text-sm"><div class="w-6 h-6 bg-brand-200 text-brand-800 rounded-full flex items-center justify-center text-xs">4</div> Pengaruh Parameter</h4>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Bagaimana kontribusi parameter diameter batang dan tinggi tanaman terhadap estimasi biomassa dan cadangan karbon pada kedua sistem penggunaan lahan tersebut?</p>
-            </div>
-        </div>
+    <div class="mb-10 text-center">
+        <span class="inline-flex items-center gap-2 bg-red-50 text-red-600 text-xs font-bold px-3 py-1.5 rounded-full mb-3"><i class="fa-solid fa-circle-question"></i>Identifikasi Gap</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-800 leading-tight mb-4">Rumusan Masalah</h2>
+        <div class="w-16 h-1 bg-red-500 rounded-full mx-auto mb-4"></div>
+        <p class="text-slate-600 text-lg">Berdasarkan penjelasan di atas, penelitian ini akan berfokus untuk menjawab empat pertanyaan utama berikut:</p>
     </div>
 
-    <!-- Tujuan -->
-    <div class="mb-12">
-        <span class="inline-flex items-center gap-2 bg-accent-500/10 text-accent-600 text-xs font-bold px-3 py-1.5 rounded-full mb-3"><i class="fa-solid fa-bullseye"></i>Tujuan</span>
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-800 leading-tight mb-5">Tujuan Penelitian</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="flex flex-col gap-2 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-brand-500 transition-colors">
-                <div class="text-brand-300 font-black text-3xl leading-none">01</div>
-                <h3 class="font-bold text-slate-800 text-sm">Estimasi Monokultur</h3>
-                <p class="text-xs text-slate-600">Mengestimasi biomassa dan cadangan karbon (AGB) pada kebun sawit sistem monokultur petani swadaya.</p>
-            </div>
-            <div class="flex flex-col gap-2 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-brand-500 transition-colors">
-                <div class="text-brand-300 font-black text-3xl leading-none">02</div>
-                <h3 class="font-bold text-slate-800 text-sm">Estimasi Polikultur</h3>
-                <p class="text-xs text-slate-600">Mengestimasi biomassa dan cadangan karbon (AGB) pada sistem polikultur sawit-karet petani swadaya.</p>
-            </div>
-            <div class="flex flex-col gap-2 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-accent-500 transition-colors">
-                <div class="text-accent-300 font-black text-3xl leading-none">03</div>
-                <h3 class="font-bold text-slate-800 text-sm">Analisis Komparasi</h3>
-                <p class="text-xs text-slate-600">Menganalisis perbedaan cadangan karbon yang signifikan antara sistem monokultur dan polikultur.</p>
-            </div>
-            <div class="flex flex-col gap-2 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-accent-500 transition-colors">
-                <div class="text-accent-300 font-black text-3xl leading-none">04</div>
-                <h3 class="font-bold text-slate-800 text-sm">Pengaruh Parameter</h3>
-                <p class="text-xs text-slate-600">Menganalisis kontribusi parameter diameter batang (DBH) dan tinggi tanaman terhadap estimasi total karbon.</p>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <!-- Q1 -->
+        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 text-8xl text-slate-200 opacity-50 font-black italic">1</div>
+            <h4 class="font-bold text-brand-900 mb-3 text-lg relative z-10"><i class="fa-solid fa-tree mr-2 text-brand-600"></i> Monokultur Sawit</h4>
+            <p class="text-base text-slate-700 leading-relaxed relative z-10">Berapa besar estimasi biomassa dan cadangan karbon atas permukaan tanah (Above Ground Biomass) pada sistem perkebunan kelapa sawit monokultur milik petani swadaya?</p>
         </div>
+        <!-- Q2 -->
+        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 text-8xl text-slate-200 opacity-50 font-black italic">2</div>
+            <h4 class="font-bold text-brand-900 mb-3 text-lg relative z-10"><i class="fa-solid fa-layer-group mr-2 text-brand-600"></i> Polikultur Sawit-Karet</h4>
+            <p class="text-base text-slate-700 leading-relaxed relative z-10">Berapa besar estimasi biomassa dan cadangan karbon atas permukaan tanah (AGB) pada sistem polikultur sawit–karet milik petani swadaya?</p>
+        </div>
+        <!-- Q3 -->
+        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 text-8xl text-slate-200 opacity-50 font-black italic">3</div>
+            <h4 class="font-bold text-accent-700 mb-3 text-lg relative z-10"><i class="fa-solid fa-scale-balanced mr-2 text-accent-500"></i> Komparasi Signifikansi</h4>
+            <p class="text-base text-slate-700 leading-relaxed relative z-10">Apakah terdapat perbedaan cadangan karbon atas permukaan tanah yang signifikan antara sistem monokultur sawit dan sistem polikultur sawit–karet?</p>
+        </div>
+        <!-- Q4 -->
+        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 text-8xl text-slate-200 opacity-50 font-black italic">4</div>
+            <h4 class="font-bold text-blue-700 mb-3 text-lg relative z-10"><i class="fa-solid fa-chart-line mr-2 text-blue-500"></i> Kontribusi Parameter</h4>
+            <p class="text-base text-slate-700 leading-relaxed relative z-10">Bagaimana kontribusi parameter diameter batang dan tinggi tanaman terhadap estimasi biomassa dan cadangan karbon pada kedua sistem penggunaan lahan tersebut?</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SLIDE 3 · TUJUAN & MANFAAT ══════ -->
+<div class="main-slide bg-slate-50" id="slide-3">
+  <div class="min-h-screen flex flex-col p-6 sm:p-10 pt-16 max-w-6xl mx-auto pb-20">
+    <!-- Tujuan -->
+    <div class="mb-12 text-center md:text-left flex flex-col md:flex-row gap-8 items-center">
+      <div class="md:w-1/3">
+        <span class="inline-flex items-center gap-2 bg-accent-500/10 text-accent-600 text-xs font-bold px-3 py-1.5 rounded-full mb-3"><i class="fa-solid fa-bullseye"></i>Arah Penelitian</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-800 leading-tight">Tujuan<br><span class="text-brand-700">Penelitian</span></h2>
+        <div class="w-16 h-1 bg-accent-500 rounded-full mt-4 mx-auto md:mx-0"></div>
+      </div>
+      <div class="md:w-2/3 bg-white p-6 rounded-2xl border-l-4 border-brand-500 text-base text-slate-700 shadow-sm leading-relaxed">
+        Penelitian ini memiliki empat tujuan utama yang sejalan dengan rumusan masalah, yaitu mengestimasi AGB <strong>monokultur sawit</strong>, mengestimasi AGB <strong>polikultur sawit-karet</strong>, <strong>menganalisis signifikansi perbedaannya</strong>, serta <strong>menganalisis pengaruh parameter dimensi pohon</strong> (DBH & tinggi) terhadap total karbon.
+      </div>
     </div>
 
     <!-- Manfaat -->
-    <div>
-        <span class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-full mb-3"><i class="fa-solid fa-hand-holding-heart"></i>Manfaat</span>
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-800 leading-tight mb-5">Manfaat Penelitian</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-gradient-to-br from-brand-50 to-white p-6 rounded-2xl border border-brand-200 shadow-sm">
-                <h4 class="font-bold text-brand-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-seedling text-brand-500"></i> Manfaat Praktis</h4>
-                <p class="text-sm text-slate-600 leading-relaxed">Data hasil penelitian dapat menjadi informasi dasar (baseline data) mengenai potensi cadangan karbon pada perkebunan rakyat, khususnya sistem monokultur dan polikultur sawit–karet. Informasi tersebut dapat digunakan sebagai bahan pertimbangan dalam pengembangan praktik perkebunan berkelanjutan serta mendukung kebijakan mitigasi perubahan iklim berbasis sektor penggunaan lahan.</p>
+    <div class="mt-4">
+        <div class="text-center mb-8">
+            <span class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-full mb-3"><i class="fa-solid fa-hand-holding-heart"></i>Dampak</span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-800 leading-tight">Manfaat Penelitian</h2>
+            <div class="w-16 h-1 bg-blue-500 rounded-full mx-auto mt-4"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gradient-to-br from-white to-brand-50 p-8 rounded-3xl border border-brand-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="w-14 h-14 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center text-2xl mb-5"><i class="fa-solid fa-seedling"></i></div>
+                <h4 class="font-bold text-brand-900 text-xl mb-3">1. Manfaat Praktis</h4>
+                <p class="text-base text-slate-600 leading-relaxed">Data hasil penelitian dapat menjadi informasi dasar (baseline data) mengenai potensi cadangan karbon pada perkebunan rakyat, khususnya sistem monokultur dan polikultur sawit–karet. Informasi tersebut dapat digunakan sebagai bahan pertimbangan dalam pengembangan praktik perkebunan berkelanjutan serta mendukung kebijakan mitigasi perubahan iklim berbasis sektor penggunaan lahan.</p>
             </div>
-            <div class="bg-gradient-to-br from-accent-50 to-white p-6 rounded-2xl border border-accent-200 shadow-sm">
-                <h4 class="font-bold text-brand-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-people-group text-accent-500"></i> Manfaat Sosial-Ekonomi</h4>
-                <p class="text-sm text-slate-600 leading-relaxed">Penelitian ini diharapkan dapat meningkatkan pemahaman petani swadaya mengenai pentingnya sistem tanam yang memiliki nilai ekologis lebih baik, khususnya dalam meningkatkan potensi penyimpanan karbon dan keberlanjutan lahan perkebunan.</p>
+            <div class="bg-gradient-to-br from-white to-accent-50 p-8 rounded-3xl border border-accent-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="w-14 h-14 bg-accent-100 text-accent-600 rounded-2xl flex items-center justify-center text-2xl mb-5"><i class="fa-solid fa-people-group"></i></div>
+                <h4 class="font-bold text-brand-900 text-xl mb-3">2. Manfaat Sosial-Ekonomi</h4>
+                <p class="text-base text-slate-600 leading-relaxed">Penelitian ini diharapkan dapat meningkatkan pemahaman petani swadaya mengenai pentingnya sistem tanam yang memiliki nilai ekologis lebih baik, khususnya dalam meningkatkan potensi penyimpanan karbon dan keberlanjutan lahan perkebunan.</p>
             </div>
         </div>
     </div>
@@ -379,8 +382,8 @@
   </div>
 </div>
 
-<!-- ══════ SLIDE 3 · PUSTAKA & GAP ══════ -->
-<div class="main-slide bg-brand-900 text-white" id="slide-3">
+<!-- ══════ SLIDE 4 · PUSTAKA & GAP ══════ -->
+<div class="main-slide bg-brand-900 text-white" id="slide-4">
   <div class="min-h-screen flex flex-col p-6 sm:p-10 pt-16 max-w-6xl mx-auto pb-20 relative overflow-hidden">
     <div class="absolute -top-32 -left-32 w-96 h-96 bg-brand-700 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
     <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-accent-600 rounded-full blur-3xl opacity-20 pointer-events-none"></div>
@@ -459,8 +462,8 @@
   </div>
 </div>
 
-<!-- ══════ SLIDE 4 · METODOLOGI (sub-slider) ══════ -->
-<div class="main-slide bg-slate-50" id="slide-4">
+<!-- ══════ SLIDE 5 · METODOLOGI (sub-slider) ══════ -->
+<div class="main-slide bg-slate-50" id="slide-5">
   <div class="method-shell">
     <!-- TOP BAR -->
     <div class="method-top p-4 sm:p-6 pt-14 pb-0 bg-slate-50 border-b border-slate-200">
@@ -476,13 +479,14 @@
             <button class="method-tab active" onclick="gMS(0)"><span class="opacity-40 mr-0.5">1·</span>Rasionalisasi</button>
             <button class="method-tab" onclick="gMS(1)"><span class="opacity-40 mr-0.5">2·</span>Desain Layout</button>
             <button class="method-tab" onclick="gMS(2)"><span class="opacity-40 mr-0.5">3·</span>Pengukuran</button>
-            <button class="method-tab" onclick="gMS(3)"><span class="opacity-40 mr-0.5">4·</span>Formula</button>
+            <button class="method-tab" onclick="gMS(3)"><span class="opacity-40 mr-0.5">4·</span>Simulasi Data</button>
+            <button class="method-tab" onclick="gMS(4)"><span class="opacity-40 mr-0.5">5·</span>Formula</button>
           </div>
         </div>
         <!-- Dots (Mobile <md) -->
         <div class="method-dots-wrap md:hidden flex items-center justify-between mb-2 px-2">
           <div class="method-dots" id="mDots"></div>
-          <span class="text-xs text-slate-400 font-semibold" id="mStepLbl">Langkah 1/4</span>
+          <span class="text-xs text-slate-400 font-semibold" id="mStepLbl">Langkah 1/5</span>
         </div>
       </div>
     </div>
@@ -503,12 +507,24 @@
                     <p class="text-slate-600 text-xs">Deskriptif kuantitatif dengan komparasi (uji silang).</p>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-brand-500">
+                    <div class="flex items-center gap-3 mb-2"><div class="w-8 h-8 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center shrink-0"><i class="fa-solid fa-cubes"></i></div><h4 class="font-bold text-brand-900 text-sm">Populasi & Sampel</h4></div>
+                    <p class="text-slate-600 text-xs">Sensus seluruh individu pohon pada petak ukur. Intensitas Sampling (IS) <strong>20%</strong> dari hamparan 1 Hektar.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-brand-500">
                     <div class="flex items-center gap-3 mb-2"><div class="w-8 h-8 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center shrink-0"><i class="fa-solid fa-crosshairs"></i></div><h4 class="font-bold text-brand-900 text-sm">Teknik Sampling</h4></div>
-                    <p class="text-slate-600 text-xs"><em>Purposive & Systematic Sampling</em> (IS 20% / Ha).</p>
+                    <p class="text-slate-600 text-xs"><em>Purposive & Systematic Sampling</em> (Peletakan sub-plot 20 &times; 50 m).</p>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-accent-500">
                     <div class="flex items-center gap-3 mb-2"><div class="w-8 h-8 bg-accent-50 text-accent-600 rounded-lg flex items-center justify-center shrink-0"><i class="fa-solid fa-database"></i></div><h4 class="font-bold text-brand-900 text-sm">Sumber Data</h4></div>
-                    <p class="text-slate-600 text-xs">Primer: DBH. Sekunder: Rumus Alometrik & Fraksi 47%.</p>
+                    <p class="text-slate-600 text-xs">Primer: DBH & Keliling. Sekunder: Rumus Alometrik & Fraksi 47%.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-accent-500">
+                    <div class="flex items-center gap-3 mb-2"><div class="w-8 h-8 bg-accent-50 text-accent-600 rounded-lg flex items-center justify-center shrink-0"><i class="fa-solid fa-chart-pie"></i></div><h4 class="font-bold text-brand-900 text-sm">Analisis Data</h4></div>
+                    <p class="text-slate-600 text-xs">Estimasi Biomassa Non-Destruktif & Independent Sample T-Test untuk komparasi nilai Karbon.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-accent-500">
+                    <div class="flex items-center gap-3 mb-2"><div class="w-8 h-8 bg-accent-50 text-accent-600 rounded-lg flex items-center justify-center shrink-0"><i class="fa-solid fa-map-location-dot"></i></div><h4 class="font-bold text-brand-900 text-sm">Lokasi & Jadwal</h4></div>
+                    <p class="text-slate-600 text-xs"><strong>Agustus 2026</strong> di Desa Bukit Mulya, Kec. Air Rami, Kab. Mukomuko, Bengkulu.</p>
                 </div>
             </div>
             
@@ -579,20 +595,20 @@
           <div class="p-4 sm:p-6 pb-16 max-w-4xl mx-auto flex flex-col md:flex-row-reverse gap-6 items-center">
             <div class="w-full md:w-1/2 flex flex-col gap-3">
                 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm relative group cursor-pointer" onclick="openImageModal('image_12b9e9.png')">
-                    <img src="image_12b9e9.png" alt="Pengukuran DBH" class="w-full rounded-xl object-contain max-h-[220px] mx-auto group-hover:opacity-80 transition-opacity" onerror="this.style.display='none'">
+                    <img src="image_12b9e9.png" alt="Pengukuran DBH" class="w-full rounded-xl object-contain max-h-[180px] mx-auto group-hover:opacity-80 transition-opacity" onerror="this.style.display='none'">
                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"><i class="fa-solid fa-expand text-4xl text-brand-900 drop-shadow-lg"></i></div>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
-                     <div class="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm relative group cursor-pointer" onclick="openImageModal('image_54e6a1.jpg')">
-                         <img src="image_54e6a1.jpg" alt="Dokumentasi 1" class="w-full h-28 object-cover rounded-xl group-hover:opacity-80 transition-opacity">
+                     <div class="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm relative group cursor-pointer" onclick="openImageModal('image_54e6a1.png')">
+                         <img src="image_54e6a1.png" alt="Dokumentasi 1" class="w-full h-28 object-cover rounded-xl group-hover:opacity-80 transition-opacity" onerror="this.style.display='none'">
                          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"><i class="fa-solid fa-expand text-2xl text-white drop-shadow-md"></i></div>
                      </div>
-                     <div class="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm relative group cursor-pointer" onclick="openImageModal('image_54e645.jpg')">
-                         <img src="image_54e645.jpg" alt="Dokumentasi 2" class="w-full h-28 object-cover rounded-xl group-hover:opacity-80 transition-opacity">
+                     <div class="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm relative group cursor-pointer" onclick="openImageModal('image_54e645.png')">
+                         <img src="image_54e645.png" alt="Dokumentasi 2" class="w-full h-28 object-cover rounded-xl group-hover:opacity-80 transition-opacity" onerror="this.style.display='none'">
                          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"><i class="fa-solid fa-expand text-2xl text-white drop-shadow-md"></i></div>
                      </div>
                 </div>
-                <p class="text-center text-xs text-slate-500 mt-2 italic">Gambar 2. Dokumentasi Pengukuran Diameter Setinggi Dada (DBH)</p>
+                <p class="text-center text-xs text-slate-500 mt-1 italic">Gambar 2. Dokumentasi Pengukuran (Tinggi & Keliling)</p>
             </div>
             <div class="w-full md:w-1/2">
                 <h3 class="text-xl font-bold text-brand-900 mb-4">Pengukuran & Analisis Data</h3>
@@ -612,7 +628,51 @@
           </div>
         </div>
 
-        <!-- MS 3: Formula Alometrik -->
+        <!-- MS 3: Simulasi Data -->
+        <div class="method-slide custom-sb">
+          <div class="p-4 sm:p-6 pb-16 max-w-6xl mx-auto">
+            <h3 class="text-xl font-bold text-brand-900 mb-4 text-center">Simulasi Perhitungan Data</h3>
+            <p class="text-center text-sm text-slate-500 mb-6">Contoh konversi dari hasil ukuran pita meter (Keliling & Tinggi) menjadi nilai estimasi Biomasa dan Karbon.</p>
+            
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div class="overflow-x-auto custom-sb">
+                  <table class="w-full text-center text-sm text-slate-600 border-collapse min-w-[900px]">
+                    <thead class="bg-brand-900 text-white font-bold leading-snug">
+                      <tr>
+                        <th class="px-3 py-3 border-r border-brand-700">No Pokok</th>
+                        <th class="px-3 py-3 border-r border-brand-700">Kode Data</th>
+                        <th class="px-3 py-3 border-r border-brand-700">Keliling (cm)</th>
+                        <th class="px-3 py-3 border-r border-brand-700">Tinggi (cm)</th>
+                        <th class="px-3 py-3 border-r border-brand-700">Tinggi (m)</th>
+                        <th class="px-3 py-3 border-r border-brand-700">Diameter<br><span class="text-[10px] font-normal opacity-80">(D = K / π)</span></th>
+                        <th class="px-3 py-3 border-r border-brand-700">Estimasi Biomasa<br><span class="text-[10px] font-normal opacity-80">(W = 0.003 × D<sup>2.761</sup>)</span></th>
+                        <th class="px-3 py-3">Estimasi Karbon<br><span class="text-[10px] font-normal opacity-80">(Karbon = W × 0.47)</span></th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 bg-white">
+                      <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-2.5 border-r border-slate-200">1</td><td class="py-2.5 border-r border-slate-200 font-mono text-xs">225-114</td><td class="py-2.5 border-r border-slate-200">225</td><td class="py-2.5 border-r border-slate-200">114</td><td class="py-2.5 border-r border-slate-200">1,14</td><td class="py-2.5 border-r border-slate-200 font-bold text-brand-700">71,62</td><td class="py-2.5 border-r border-slate-200 font-bold text-amber-600">397,07</td><td class="py-2.5 font-bold text-brand-900 bg-brand-50/50">186,62</td>
+                      </tr>
+                      <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-2.5 border-r border-slate-200">2</td><td class="py-2.5 border-r border-slate-200 font-mono text-xs">233-115</td><td class="py-2.5 border-r border-slate-200">233</td><td class="py-2.5 border-r border-slate-200">115</td><td class="py-2.5 border-r border-slate-200">1,15</td><td class="py-2.5 border-r border-slate-200 font-bold text-brand-700">74,17</td><td class="py-2.5 border-r border-slate-200 font-bold text-amber-600">437,28</td><td class="py-2.5 font-bold text-brand-900 bg-brand-50/50">205,52</td>
+                      </tr>
+                      <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-2.5 border-r border-slate-200">3</td><td class="py-2.5 border-r border-slate-200 font-mono text-xs">245-170</td><td class="py-2.5 border-r border-slate-200">245</td><td class="py-2.5 border-r border-slate-200">170</td><td class="py-2.5 border-r border-slate-200">1,70</td><td class="py-2.5 border-r border-slate-200 font-bold text-brand-700">77,99</td><td class="py-2.5 border-r border-slate-200 font-bold text-amber-600">502,32</td><td class="py-2.5 font-bold text-brand-900 bg-brand-50/50">236,09</td>
+                      </tr>
+                      <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-2.5 border-r border-slate-200">4</td><td class="py-2.5 border-r border-slate-200 font-mono text-xs">255-128</td><td class="py-2.5 border-r border-slate-200">255</td><td class="py-2.5 border-r border-slate-200">128</td><td class="py-2.5 border-r border-slate-200">1,28</td><td class="py-2.5 border-r border-slate-200 font-bold text-brand-700">81,17</td><td class="py-2.5 border-r border-slate-200 font-bold text-amber-600">560,98</td><td class="py-2.5 font-bold text-brand-900 bg-brand-50/50">263,66</td>
+                      </tr>
+                      <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-2.5 border-r border-slate-200">5</td><td class="py-2.5 border-r border-slate-200 font-mono text-xs">186-162</td><td class="py-2.5 border-r border-slate-200">186</td><td class="py-2.5 border-r border-slate-200">162</td><td class="py-2.5 border-r border-slate-200">1,62</td><td class="py-2.5 border-r border-slate-200 font-bold text-brand-700">59,21</td><td class="py-2.5 border-r border-slate-200 font-bold text-amber-600">234,76</td><td class="py-2.5 font-bold text-brand-900 bg-brand-50/50">110,34</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MS 4: Formula Alometrik -->
         <div class="method-slide custom-sb">
           <div class="p-4 sm:p-6 pb-16 max-w-4xl mx-auto">
             <h3 class="text-xl font-bold text-brand-900 mb-4 text-center">Pendekatan Formula Alometrik</h3>
@@ -658,10 +718,10 @@
       </div><!-- /methodSliderContainer -->
     </div><!-- /method-viewport -->
   </div><!-- /method-shell -->
-</div><!-- /slide-4 -->
+</div><!-- /slide-5 -->
 
-<!-- ══════ SLIDE 5 · JADWAL ══════ -->
-<div class="main-slide bg-white" id="slide-5">
+<!-- ══════ SLIDE 6 · JADWAL ══════ -->
+<div class="main-slide bg-white" id="slide-6">
   <div class="min-h-screen flex flex-col p-6 sm:p-10 pt-16 max-w-5xl mx-auto pb-20">
     <div class="mb-5 text-center">
       <span class="inline-flex items-center gap-2 bg-purple-50 text-purple-700 text-xs font-bold px-3 py-1.5 rounded-full mb-3"><i class="fa-solid fa-calendar-days"></i>Timeline</span>
@@ -692,8 +752,8 @@
   </div>
 </div>
 
-<!-- ══════ SLIDE 6 · DISKUSI & QnA ══════ -->
-<div class="main-slide bg-slate-50" id="slide-6">
+<!-- ══════ SLIDE 7 · DISKUSI & QnA ══════ -->
+<div class="main-slide bg-slate-50" id="slide-7">
   <div class="min-h-screen flex flex-col p-5 sm:p-10 pt-16 max-w-3xl mx-auto pb-24">
     <div class="mb-5 text-center">
       <span class="inline-flex items-center gap-2 bg-brand-100 text-brand-900 text-xs font-bold px-3 py-1.5 rounded-full mb-3"><i class="fa-solid fa-comments"></i>Tanya Jawab</span>
@@ -753,10 +813,10 @@
 <script>
 // ── STATE ──────────────────────────────────────────────
 let curSlide = 0;
-const SLIDES = 7;
+const SLIDES = 8;
 let presentMode = true;
 let curMS = 0;
-const MS_TOTAL = 4;
+const MS_TOTAL = 5;
 let comments = [];
 let nextCid = 1;
 let editingCtx = null; // {id, isReply, parentId}
@@ -764,7 +824,8 @@ let editingCtx = null; // {id, isReply, parentId}
 const SLIDE_META = [
   { icon:'fa-house',          label:'Cover' },
   { icon:'fa-earth-americas', label:'Latar Belakang' },
-  { icon:'fa-bullseye',       label:'Tujuan Penelitian' },
+  { icon:'fa-circle-question',label:'Rumusan Masalah' },
+  { icon:'fa-bullseye',       label:'Tujuan & Manfaat' },
   { icon:'fa-book-open',      label:'Tinjauan & Gap' },
   { icon:'fa-diagram-project',label:'Metodologi' },
   { icon:'fa-calendar-days',  label:'Jadwal Penelitian' },
@@ -798,7 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateSlider(){
   document.getElementById('slider-container').style.transform = `translateX(-${curSlide*100}vw)`;
   const pc = document.getElementById('progressCont');
-  curSlide === 0 || curSlide === 3 ? pc.classList.remove('on-light') : pc.classList.add('on-light');
+  curSlide === 0 || curSlide === 4 ? pc.classList.remove('on-light') : pc.classList.add('on-light');
   document.getElementById('prevBtn').disabled = curSlide === 0;
   document.getElementById('nextBtn').disabled = curSlide === SLIDES-1;
 }
@@ -860,10 +921,10 @@ function setMode(m){
   document.body.classList.toggle('web-mode', !presentMode);
   const pill=document.getElementById('modePill'), bP=document.getElementById('btnP'), bW=document.getElementById('btnW');
   if(presentMode){
-    pill.style.left='4px'; pill.style.width=bP.offsetWidth+'px';
+    pill.style.left='4px';
     bP.classList.add('active'); bW.classList.remove('active');
   } else {
-    pill.style.left=(bP.offsetWidth+4)+'px'; pill.style.width=bW.offsetWidth+'px';
+    pill.style.left=(bP.offsetWidth+4)+'px';
     bP.classList.remove('active'); bW.classList.add('active');
     window.scrollTo(0,0);
   }
